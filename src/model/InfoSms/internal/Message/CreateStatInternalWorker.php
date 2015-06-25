@@ -39,18 +39,14 @@ class CreateStatInternalWorker
      */
     public function create($info, $total)
     {
-        $today = time();
-        $year = date('Y', $today);
-        $month = date('m', $today);
-        $day = date('d', $today);
-
         $this->connectToStorageInternalWorker->connect()->insert([
             'id' => $info['id'],
-            'year' => $year,
-            'month' => $month,
-            'day' => $day,
             'body' => $info['body'],
             'topics' => $info['topics'],
+            'year' => date('Y', $info['created']),
+            'month' => date('m', $info['created']),
+            'day' => date('d', $info['created']),
+            'time' =>  date('H:i:s', $info['created']),
             'total' => $total,
             'delivered' => 0,
             'notDelivered' => 0

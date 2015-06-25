@@ -154,33 +154,36 @@ Feature: Processes info sms infos
         [
             {
                 "id": "i3",
+                "body": "Third info",
+                "topics": ["t2"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "Third info",
-                "topics": ["t2"],
+                "time": "@string@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
             },
             {
                 "id": "i2",
+                "body": "Second info",
+                "topics": ["t1"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "Second info",
-                "topics": ["t1"],
+                "time": "@string@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
             },
             {
                 "id": "i1",
+                "body": "First info",
+                "topics": ["t1"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "First info",
-                "topics": ["t1"],
+                "time": "@string@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
@@ -207,11 +210,12 @@ Feature: Processes info sms infos
         [
             {
                 "id": "i1",
+                "body": "First info",
+                "topics": ["t1"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "First info",
-                "topics": ["t1"],
+                "time": "@string@",
                 "total": 0,
                 "delivered": 0,
                 "notDelivered": 0
@@ -290,11 +294,12 @@ Feature: Processes info sms infos
         [
             {
                 "id": "i1",
+                "body": "First info",
+                "topics": ["t1", "t2"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "First info",
-                "topics": ["t1", "t2"],
+                "time": "@string@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
@@ -336,11 +341,12 @@ Feature: Processes info sms infos
         [
             {
                 "id": "i1",
+                "body": "First info",
+                "topics": ["t1"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "First info",
-                "topics": ["t1"],
+                "time": "@string@",
                 "total": 0,
                 "delivered": 0,
                 "notDelivered": 0
@@ -419,11 +425,12 @@ Feature: Processes info sms infos
         [
             {
                 "id": "i1",
+                "body": "First info",
+                "topics": ["t1"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "First info",
-                "topics": ["t1"],
+                "time": "@string@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
@@ -465,11 +472,12 @@ Feature: Processes info sms infos
         [
             {
                 "id": "i1",
+                "body": "First info",
+                "topics": ["t1"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "First info",
-                "topics": ["t1"],
+                "time": "@string@",
                 "total": 0,
                 "delivered": 0,
                 "notDelivered": 0

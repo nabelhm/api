@@ -127,22 +127,24 @@ Feature: Process delivery operations
         [
             {
                 "id": "i2",
+                "body": "Second info",
+                "topics": ["t2"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "Second info",
-                "topics": ["t2"],
+                "time": "@string@",
                 "total": 1,
                 "delivered": 1,
                 "notDelivered": 0
             },
             {
                 "id": "i1",
+                "body": "First info",
+                "topics": ["t1", "t2"],
                 "year": "@string@",
                 "month": "@string@",
                 "day": "@string@",
-                "body": "First info",
-                "topics": ["t1", "t2"],
+                "time": "@string@",
                 "total": 2,
                 "delivered": 1,
                 "notDelivered": 1
