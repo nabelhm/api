@@ -131,14 +131,14 @@ class CreatePaidSubscriptionInternalWorker
         if (!$this->checkOperationInternalWorker->checkTrial($mobile)
             && !$this->checkOperationInternalWorker->checkCreate($mobile)
         ) {
-//            $this->enqueueMessageApiWorker->enqueue(
-//                $mobile,
-//                sprintf(
-//                    "Tu telefono se ha subscrito con %s sms para recibir noticias %s que seleccionaste.",
-//                    $resellPackage['amount'],
-//                    count($topics) == 1 ? "del topico" : sprintf("de los %s topicos", count($topics))
-//                )
-//            );
+            $this->enqueueMessageApiWorker->enqueue(
+                $mobile,
+                sprintf(
+                    "Tu telefono se ha subscrito con %s sms para recibir noticias %s que seleccionaste.",
+                    $resellPackage['amount'],
+                    count($topics) == 1 ? "del topico" : sprintf("de los %s topicos", count($topics))
+                )
+            );
         }
 
         $this->logOperationInternalWorker->logCreate(

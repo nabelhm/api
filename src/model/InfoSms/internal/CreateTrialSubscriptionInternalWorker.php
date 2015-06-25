@@ -98,14 +98,14 @@ class CreateTrialSubscriptionInternalWorker
             throw $e;
         }
 
-//        $this->enqueueMessageApiWorker->enqueue(
-//            $mobile,
-//            sprintf(
-//                "Tu telefono se ha subscrito con %s sms gratis para recibir noticias %s que seleccionaste.",
-//                10,
-//                count($topics) == 1 ? "del topico" : sprintf("de los %s topicos", count($topics))
-//            )
-//        );
+        $this->enqueueMessageApiWorker->enqueue(
+            $mobile,
+            sprintf(
+                "Tu telefono se ha subscrito con %s sms gratis para recibir noticias %s que seleccionaste.",
+                10,
+                count($topics) == 1 ? "del topico" : sprintf("de los %s topicos", count($topics))
+            )
+        );
 
         $this->logOperationInternalWorker->logTrial(
             $mobile,
