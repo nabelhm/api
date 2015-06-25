@@ -1,0 +1,217 @@
+default:
+    extensions:
+          Behat\Symfony2Extension: ~
+          Behat\WebApiExtension:
+              base_url: 'http://api.muchacuba.local/app_test.php/'
+    suites:
+        credit.me.profile.balance.collect_operations:
+            paths: [%paths.base%/test/features/credit/me/profile/balance/collect_operations.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\Credit\Profile\Balance\Context
+
+        credit.me.pick_profile:
+            paths: [%paths.base%/test/features/credit/me/pick_profile.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\Credit\Profile\Context
+
+        credit.access:
+            paths: [%paths.base%/test/features/credit/access.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+
+        info_sms.me.buy_package:
+            paths: [%paths.base%/test/features/info_sms/me/buy_package.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\Credit\Context
+                - Muchacuba\Credit\Profile\Context
+                - Muchacuba\Credit\Profile\Balance\Context
+                - Muchacuba\InfoSms\Context
+                - Muchacuba\InfoSms\Profile\Context
+
+        info_sms.me.manage_subscriptions:
+            paths: [%paths.base%/test/features/info_sms/me/manage_subscriptions.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Cubalider\Sms\Context
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Context
+                - Muchacuba\InfoSms\Profile\Context
+                - Muchacuba\InfoSms\Subscription\Context
+                - Muchacuba\InfoSms\Subscription\LowBalanceReminder\Context
+
+        info_sms.me.pick_profile:
+            paths: [%paths.base%/test/features/info_sms/me/pick_profile.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Context
+                - Muchacuba\InfoSms\Profile\Context
+
+        info_sms.access:
+            paths: [%paths.base%/test/features/info_sms/access.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+
+        info_sms.manage_infos:
+            paths: [%paths.base%/test/features/info_sms/manage_infos.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Context
+
+        info_sms.manage_packages:
+            paths: [%paths.base%/test/features/info_sms/manage_packages.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Context
+
+        info_sms.manage_resell_packages:
+            paths: [%paths.base%/test/features/info_sms/manage_resell_packages.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Context
+
+        info_sms.manage_topics:
+            paths: [%paths.base%/test/features/info_sms/manage_topics.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Context
+
+        info_sms.process_delivery_operations:
+            paths: [%paths.base%/test/features/info_sms/process_delivery_operations.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Cubalider\Sms\Context
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Context
+                - Muchacuba\InfoSms\Profile\Context
+                - Muchacuba\InfoSms\Message\Context
+
+        info_sms.process_infos:
+            paths: [%paths.base%/test/features/info_sms/process_infos.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Cubalider\Sms\Context
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Profile\Context
+                - Muchacuba\InfoSms\Message\Context
+                - Muchacuba\InfoSms\Context
+
+        privilege.me.pick_profile:
+            paths: [%paths.base%/test/features/privilege/me/pick_profile.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+
+        recharge_card.me.profile.debt.collect_operations:
+            paths: [%paths.base%/test/features/recharge_card/me/profile/debt/collect_operations.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\RechargeCard\Profile\Debt\Context
+
+        recharge_card.me.consume_card:
+            paths: [%paths.base%/test/features/recharge_card/me/consume_card.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\Credit\Context
+                - Muchacuba\RechargeCard\Context
+
+        recharge_card.access:
+            paths: [%paths.base%/test/features/recharge_card/access.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+
+        recharge_card.lend_cards:
+            paths: [%paths.base%/test/features/recharge_card/lend_cards.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Context
+                - Muchacuba\RechargeCard\Context
+                - Muchacuba\RechargeCard\Profile\Debt\Context
+
+        recharge_card.liquidate_debt:
+            paths: [%paths.base%/test/features/recharge_card/liquidate_debt.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\RechargeCard\Context
+                - Muchacuba\RechargeCard\Profile\Debt\Context
+
+        recharge_card.manage_categories:
+            paths: [%paths.base%/test/features/recharge_card/manage_categories.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\RechargeCard\Context
+
+        recharge_card.manage_packages:
+            paths: [%paths.base%/test/features/recharge_card/manage_packages.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\RechargeCard\Context
+#
+#        user.manage_accounts:
+#            paths: [%paths.base%/test/features/user/manage_accounts.feature]
+#            contexts:
+#                - Behat\WebApiExtension\Context\WebApiContext
+#                - Muchacuba\WebApiDebugContext
+#                - Muchacuba\Context
+#                - Muchacuba\User\Context

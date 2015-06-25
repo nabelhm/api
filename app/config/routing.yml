@@ -1,0 +1,2 @@
+model:
+    resource: "@MuchacubaModelBundle/Resources/config/routing.yml"

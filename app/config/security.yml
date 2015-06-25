@@ -1,0 +1,93 @@
+security:
+    encoders:
+        Muchacuba\ModelBundle\User\User: sha512
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    providers:
+        user:
+            id: muchacuba.model_bundle.user.user_provider
+
+    firewalls:
+        api:
+            anonymous: ~
+            stateless: true
+#            wsse:
+#                realm: "Api"
+#                profile: "UsernameToken"
+#                lifetime: 14400 # 4 hours
+            http_basic:
+                realm: "Api"
+            provider: user
+
+    role_hierarchy:
+      ROLE_ADMIN:
+          - ROLE_INFO_SMS_RESELLER
+          - ROLE_INFO_SMS_JOURNALIST
+          - ROLE_RECHARGE_CARD_RESELLER
+      ROLE_INFO_SMS_RESELLER: ROLE_USER
+      ROLE_INFO_SMS_JOURNALIST: ROLE_USER
+      ROLE_RECHARGE_CARD_RESELLER: ROLE_USER
+
+    access_control:
+        - { path: ^/credit/me/profile/balance/collect-operations, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/credit/me/pick-profile, roles: ROLE_INFO_SMS_RESELLER }
+
+        - { path: ^/info-sms/info/[^/]+/collect-operations-by-topic-from-current-week, roles: [ROLE_INFO_SMS_JOURNALIST, ROLE_INFO_SMS_RESELLER] }
+        - { path: ^/info-sms/info/[^/]+/collect-by-topic-stats-from-current-year, roles: [ROLE_INFO_SMS_JOURNALIST, ROLE_INFO_SMS_RESELLER] }
+        - { path: ^/info-sms/me/profile/balance/collect-operations, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/buy-package, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/collect-subscriptions, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/compute-subscriptions, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/create-subscription-and-compute, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/create-subscription, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/delete-subscription, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/pick-profile, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/pick-subscription/[^/]+, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/recharge-subscription/[^/]+, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/me/update-subscription/[^/]+, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/message/collect-latest-stats, roles: [ROLE_INFO_SMS_JOURNALIST, ROLE_INFO_SMS_RESELLER] }
+        - { path: ^/info-sms/subscription/[^/]+/collect-operations-by-topic-from-current-week, roles: [ROLE_INFO_SMS_JOURNALIST] }
+        - { path: ^/info-sms/subscription/[^/]+/collect-operations-by-topic-from-current-year, roles: [ROLE_INFO_SMS_JOURNALIST] }
+        - { path: ^/info-sms/collect-archived-infos, roles: ROLE_INFO_SMS_JOURNALIST }
+        - { path: ^/info-sms/collect-infos, roles: ROLE_INFO_SMS_JOURNALIST }
+        - { path: ^/info-sms/collect-packages, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/collect-resell-packages, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/info-sms/collect-topics, roles: [ROLE_INFO_SMS_JOURNALIST, ROLE_INFO_SMS_RESELLER] }
+        - { path: ^/info-sms/create-info, roles: ROLE_INFO_SMS_JOURNALIST }
+        - { path: ^/info-sms/create-package, roles: ROLE_ADMIN }
+        - { path: ^/info-sms/create-resell-package, roles: ROLE_ADMIN }
+        - { path: ^/info-sms/create-topic, roles: ROLE_INFO_SMS_JOURNALIST }
+        - { path: ^/info-sms/delete-info, roles: ROLE_INFO_SMS_JOURNALIST }
+        - { path: ^/info-sms/delete-package, roles: ROLE_ADMIN }
+        - { path: ^/info-sms/delete-resell-package, roles: ROLE_ADMIN }
+        - { path: ^/info-sms/delete-topic, roles: ROLE_ADMIN }
+        - { path: ^/info-sms/pick-topic/[^/]+, roles: [ROLE_INFO_SMS_JOURNALIST, ROLE_INFO_SMS_RESELLER] }
+        - { path: ^/info-sms/update-info, roles: ROLE_INFO_SMS_JOURNALIST }
+        - { path: ^/info-sms/update-package, roles: ROLE_ADMIN }
+        - { path: ^/info-sms/update-resell-package, roles: ROLE_ADMIN }
+        - { path: ^/info-sms/update-topic, roles: ROLE_INFO_SMS_JOURNALIST }
+
+        - { path: ^/invitation/give-cards, roles: ROLE_ADMIN }
+        - { path: ^/invitation/me/pick-profile, roles: ROLE_ADMIN }
+
+        - { path: ^/privilege/collect-roles, roles: ROLE_ADMIN }
+        - { path: ^/privilege/me/pick-profile, roles: ROLE_USER }
+
+        - { path: ^/recharge-card/me/profile/debt/collect-operations, roles: ROLE_RECHARGE_CARD_RESELLER }
+        - { path: ^/recharge-card/me/consume-card, roles: ROLE_INFO_SMS_RESELLER }
+        - { path: ^/recharge-card/me/pick-profile, roles: ROLE_RECHARGE_CARD_RESELLER }
+        - { path: ^/recharge-card/collect-categories, roles: ROLE_RECHARGE_CARD_RESELLER }
+        - { path: ^/recharge-card/collect-packages, roles: ROLE_ADMIN }
+        - { path: ^/recharge-card/create-category, roles: ROLE_ADMIN }
+        - { path: ^/recharge-card/create-package, roles: ROLE_ADMIN }
+        - { path: ^/recharge-card/delete-category, roles: ROLE_ADMIN }
+        - { path: ^/recharge-card/delete-package, roles: ROLE_ADMIN }
+        - { path: ^/recharge-card/lend-cards, roles: ROLE_ADMIN }
+        - { path: ^/recharge-card/liquidate-debt, roles: ROLE_ADMIN }
+        - { path: ^/recharge-card/update-category, roles: ROLE_ADMIN }
+        - { path: ^/recharge-card/update-package, roles: ROLE_ADMIN }
+
+        - { path: ^/user/collect-accounts, roles: ROLE_ADMIN }
+        - { path: ^/user/register-account, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        - { path: ^/, roles: ROLE_ADMIN }

@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="cubalider.unique.collect_uniquenesses_shared_worker" class="Cubalider\Unique\CollectUniquenessesSharedWorker" public="false">
+            <argument type="service" id="cubalider.unique.uniqueness.connect_to_storage_internal_worker"/>
+        </service>
+
+        <service id="cubalider.unique.compute_uniquenesses_shared_worker" class="Cubalider\Unique\ComputeUniquenessesSharedWorker" public="false">
+            <argument type="service" id="cubalider.unique.uniqueness.connect_to_storage_internal_worker"/>
+        </service>
+
+        <service id="cubalider.unique.create_uniqueness_shared_worker" class="Cubalider\Unique\CreateUniquenessSharedWorker" public="false">
+            <argument type="service" id="cubalider.unique.uniqueness.connect_to_storage_internal_worker"/>
+        </service>
+
+        <service id="cubalider.unique.delete_uniqueness_shared_worker" class="Cubalider\Unique\DeleteUniquenessSharedWorker" public="false">
+            <argument type="service" id="cubalider.unique.uniqueness.connect_to_storage_internal_worker"/>
+        </service>
+
+        <service id="cubalider.unique.pick_uniqueness_shared_worker" class="Cubalider\Unique\PickUniquenessSharedWorker" public="false">
+            <argument type="service" id="cubalider.unique.uniqueness.connect_to_storage_internal_worker"/>
+        </service>
+    </services>
+</container>

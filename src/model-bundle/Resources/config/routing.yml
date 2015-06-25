@@ -1,0 +1,7 @@
+model:
+    resource: "@MuchacubaModelBundle/Controller"
+    type:     annotation
+
+log-silverstreet-delivery-operation:
+  path: /log-silverstreet-delivery-operation
+  defaults: { _controller: CubaliderSmsBundle:Silverstreet\LogDeliveryOperation:log }

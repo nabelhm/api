@@ -1,0 +1,51 @@
+# This file is a "template" of what your parameters.yml file should look like
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+    # You should uncomment this if you want use pdo_sqlite
+    # database_path: "%kernel.root_dir%/data.db3"
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+
+    # A secret key that's used to generate certain security-related tokens
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    admin_email: admin@localhost
+
+    mongo_server: mongodb://localhost:27017
+    mongo_db: muchacuba
+
+    # Sms
+    cubalider.sms.operator: routesms
+
+    # Routesms
+    cubalider.sms.routesms.server: smsplus1.routesms.com
+    cubalider.sms.routesms.port: 8080
+    cubalider.sms.routesms.username: username
+    cubalider.sms.routesms.password: password
+
+    # Fortytwo
+    cubalider.sms.fortytwo.server: http://fortytwo/api/current/send/link
+    cubalider.sms.fortytwo.username: fortytwo
+    cubalider.sms.fortytwo.password: fortytwo
+    cubalider.sms.fortytwo.route: fortytwo
+    cubalider.sms.fortytwo.callback: http://api.muchacuba.local/log-fortytwo-delivery-operation
+
+    # Silverstreet Sms
+    cubalider.sms.silverstreet.url: http://api.silverstreet.com/send.php
+    cubalider.sms.silverstreet.username: silverstreet
+    cubalider.sms.silverstreet.password: silverstreet
+
+    #Vianett Sms
+    cubalider.sms.vianett.url: http://smsc.vianett.no/v3/send.ashx
+    cubalider.sms.vianett.username: vianett
+    cubalider.sms.vianett.password: vianett
