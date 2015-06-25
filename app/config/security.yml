@@ -90,4 +90,6 @@ security:
         - { path: ^/user/collect-accounts, roles: ROLE_ADMIN }
         - { path: ^/user/register-account, roles: IS_AUTHENTICATED_ANONYMOUSLY }
 
+        - { path: ^/log-silverstreet-delivery-operation, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
         - { path: ^/, roles: ROLE_ADMIN }
