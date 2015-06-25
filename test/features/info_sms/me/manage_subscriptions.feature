@@ -405,6 +405,86 @@ Feature: Manage subscriptions
         [
         ]
         """
+@current
+    Scenario: Creating a subscription with an short mobile number with fix it
+        When I send a POST request to "/info-sms/me/create-subscription" with body:
+        """
+        {
+            "mobile": "12345678",
+            "alias": "nabel",
+            "topics": ["t1"],
+            "resellPackage": "rp1"
+        }
+        """
+
+        Then the response code should be 200
+
+        And the response should contain json:
+        """
+        [
+            {
+                "mobile": "+5312345678",
+                "uniqueness": "u1",
+                "alias": "nabel",
+                "topics": ["t1"],
+                "trial": 0,
+                "balance": 100,
+                "active": true
+            }
+        ]
+        """
+
+        And the system should have the following info sms subscriptions for "u1":
+        """
+        [
+            {
+                "mobile": "+5312345678",
+                "uniqueness": "u1",
+                "alias": "nabel",
+                "topics": ["t1"],
+                "trial": 0,
+                "balance": 100,
+                "active": true
+            }
+        ]
+        """
+
+        And the system should have the following info sms subscription operations:
+        """
+        [
+            {
+                "type": 1,
+                "year": "@string@",
+                "month": "@string@",
+                "day": "@string@",
+                "mobile": "+5312345678",
+                "uniqueness": "u1",
+                "topics": ["t1"],
+                "amount": 100
+            }
+        ]
+        """
+
+        And the system should have the following info sms profiles:
+        """
+        [
+            {
+                "uniqueness": "u1",
+                "balance": 900
+            }
+        ]
+        """
+
+        And the system should have the following sms messages:
+        """
+        [
+            {
+                "message": "@string@",
+                "receiver": "+5312345678",
+                "body": "Tu telefono se ha subscrito con 100 sms para recibir noticias del topico que seleccionaste."
+            }
+        ]
+        """
 
     Scenario: Creating a subscription with an invalid mobile
         When I send a POST request to "/info-sms/me/create-subscription" with body:

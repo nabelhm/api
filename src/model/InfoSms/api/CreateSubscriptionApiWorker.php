@@ -23,6 +23,7 @@ use Muchacuba\InfoSms\Subscription\TrialNotAcceptedApiException;
 use Muchacuba\InfoSms\Subscription\TrialNotAcceptedInternalException;
 use Muchacuba\InfoSms\Subscription\ValidateMobileAndAliasInternalWorker;
 use Muchacuba\InfoSms\Subscription\ValidateTopicsInternalWorker;
+use Cubalider\Phone\NumberFixer as PhoneNumberFixer;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -144,6 +145,8 @@ class CreateSubscriptionApiWorker
         } catch (NonExistentTopicInternalException $e) {
             throw new NonExistentTopicApiException();
         }
+
+        $mobile = PhoneNumberFixer::fix($mobile);
 
         if (!$resellPackage) {
             throw new NoResellPackageApiException();
