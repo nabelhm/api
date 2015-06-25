@@ -31,26 +31,11 @@ class InitFixturesCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->createAdminAccount();
         $this->createInfoSmsTopics();
         $this->createInfoSmsPackages();
         $this->createInfoSmsResellPackages();
         $this->createRechargeCardCategories();
         $this->createRechargeCardPackages();
-    }
-
-    private function createAdminAccount()
-    {
-        /** @var CreateAccountTestWorker $createAccountTestWorker */
-        $createAccountTestWorker = $this->getContainer()
-            ->get('muchacuba.user.create_account_test_worker');
-
-        $createAccountTestWorker->create(
-            uniqid(),
-            'yosmanyga@gmail.com',
-            'y0',
-            ['ROLE_ADMIN']
-        );
     }
 
     private function createInfoSmsTopics()
