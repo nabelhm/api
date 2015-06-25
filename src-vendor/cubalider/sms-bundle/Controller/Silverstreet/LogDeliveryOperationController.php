@@ -4,8 +4,8 @@ namespace Cubalider\SmsBundle\Controller\Silverstreet;
 
 use JMS\DiExtraBundle\Annotation as DI;
 use Cubalider\Sms\LogDeliveryOperationApiWorker;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -34,7 +34,7 @@ class LogDeliveryOperationController
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return Response
      */
     public function logAction(Request $request)
     {
@@ -44,6 +44,6 @@ class LogDeliveryOperationController
             $request->get('TIMESTAMP')
         );
 
-        return new JsonResponse();
+        return new Response();
     }
 }
