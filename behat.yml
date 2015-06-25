@@ -20,6 +20,7 @@ default:
                 - Muchacuba\WebApiDebugContext
                 - Muchacuba\Context
                 - Muchacuba\User\Context
+                - Muchacuba\Credit\Context
                 - Muchacuba\Credit\Profile\Context
 
         credit.access:

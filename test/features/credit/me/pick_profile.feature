@@ -32,8 +32,19 @@ Feature: Pick profile
         }
         """
 
+        And the system should have the following credit profiles:
+        """
+        [
+            {
+                "uniqueness": "u1",
+                "balance": 0
+            }
+        ]
+        """
+
+
     Scenario: Picking the credit profile having balance
-        When the credit profile "u1" has a balance of 10 CUC
+        Given the credit profile "u1" has a balance of 10 CUC
 
         And I send a GET request to "/credit/me/pick-profile"
 
@@ -45,4 +56,14 @@ Feature: Pick profile
             "uniqueness": "u1",
             "balance": 10
         }
+        """
+
+        And the system should have the following credit profiles:
+        """
+        [
+            {
+                "uniqueness": "u1",
+                "balance": 10
+            }
+        ]
         """
