@@ -68,7 +68,7 @@ security:
         - { path: ^/info-sms/update-topic, roles: ROLE_INFO_SMS_JOURNALIST }
 
         - { path: ^/invitation/give-cards, roles: ROLE_ADMIN }
-        - { path: ^/invitation/me/pick-profile, roles: ROLE_ADMIN }
+        - { path: ^/invitation/me/pick-profile, roles: ROLE_USER }
 
         - { path: ^/privilege/collect-roles, roles: ROLE_ADMIN }
         - { path: ^/privilege/me/pick-profile, roles: ROLE_USER }

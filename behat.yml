@@ -135,6 +135,24 @@ default:
                 - Muchacuba\InfoSms\Message\Context
                 - Muchacuba\InfoSms\Context
 
+        invitation.give_cards:
+             paths: [%paths.base%/test/features/invitation/give_cards.feature]
+             contexts:
+                 - Behat\WebApiExtension\Context\WebApiContext
+                 - Muchacuba\WebApiDebugContext
+                 - Muchacuba\Context
+                 - Muchacuba\User\Context
+                 - Muchacuba\Invitation\Context
+
+        invitation.pick_profile:
+             paths: [%paths.base%/test/features/invitation/me/pick_profile.feature]
+             contexts:
+                 - Behat\WebApiExtension\Context\WebApiContext
+                 - Muchacuba\WebApiDebugContext
+                 - Muchacuba\Context
+                 - Muchacuba\User\Context
+                 - Muchacuba\Invitation\Context
+
         privilege.me.pick_profile:
             paths: [%paths.base%/test/features/privilege/me/pick_profile.feature]
             contexts:
