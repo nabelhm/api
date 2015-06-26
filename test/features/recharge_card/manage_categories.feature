@@ -12,14 +12,14 @@ Feature: Manage categories
         [
             {
                 "id": "a1",
-                "username": "admin1@server.local",
-                "password": "pass1",
+                "username": "admin@server.local",
+                "password": "pass",
                 "roles": ["ROLE_ADMIN"]
             }
         ]
         """
 
-        And I am authenticating as "admin1@server.local" with "pass1" password
+        And I am authenticating as "admin@server.local" with "pass" password
 
         And I set header "content-type" with value "application/json"
 

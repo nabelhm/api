@@ -53,7 +53,7 @@ Feature: Manage subscriptions
             {
                 "id": "u1",
                 "username": "user1@server.local",
-                "password": "pass1",
+                "password": "pass",
                 "roles": ["ROLE_INFO_SMS_RESELLER"]
             }
         ]
@@ -61,7 +61,7 @@ Feature: Manage subscriptions
 
         And the info sms profile "u1" has a balance of 1000 sms
 
-        And I am authenticating as "user1@server.local" with "pass1" password
+        And I am authenticating as "user1@server.local" with "pass" password
 
         And I set header "content-type" with value "application/json"
 
@@ -405,7 +405,7 @@ Feature: Manage subscriptions
         [
         ]
         """
-@current
+
     Scenario: Creating a subscription with an short mobile number with fix it
         When I send a POST request to "/info-sms/me/create-subscription" with body:
         """

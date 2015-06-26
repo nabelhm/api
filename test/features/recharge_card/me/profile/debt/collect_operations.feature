@@ -8,13 +8,13 @@ Feature: Collect operations
         [
             {
                 "id": "u1",
-                "username": "user1@muchacuba.local",
-                "password": "pass1",
+                "username": "info_sms_reseller@muchacuba.local",
+                "password": "pass",
                 "roles": ["ROLE_RECHARGE_CARD_RESELLER"]
             },
             {
                 "id": "u2",
-                "username": "user2@muchacuba.local",
+                "username": "recharge_card_reseller@muchacuba.local",
                 "password": "pass2",
                 "roles": ["ROLE_RECHARGE_CARD_RESELLER"]
             }
@@ -51,7 +51,7 @@ Feature: Collect operations
         ]
         """
 
-        And I am authenticating as "user1@muchacuba.local" with "pass1" password
+        And I am authenticating as "info_sms_reseller@muchacuba.local" with "pass" password
 
         And I set header "content-type" with value "application/json"
 

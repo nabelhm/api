@@ -39,20 +39,20 @@ Feature: Lend cards
         [
             {
                 "id": "u1",
-                "username": "user1@muchacuba.local",
-                "password": "pass1",
+                "username": "info_sms_reseller@muchacuba.local",
+                "password": "pass",
                 "roles": ["ROLE_RECHARGE_CARD_RESELLER"]
             },
             {
-                "id": "a1",
-                "username": "admin1@server.local",
-                "password": "pass1",
+                "id": "u2",
+                "username": "admin@server.local",
+                "password": "pass",
                 "roles": ["ROLE_ADMIN"]
             }
         ]
         """
 
-        And I am authenticating as "admin1@server.local" with "pass1" password
+        And I am authenticating as "admin@server.local" with "pass" password
 
         And I set header "content-type" with value "application/json"
 
@@ -72,7 +72,7 @@ Feature: Lend cards
         {}
         """
 
-        And I am authenticating as "user1@muchacuba.local" with "pass1" password
+        And I am authenticating as "info_sms_reseller@muchacuba.local" with "pass" password
 
         And the system should have the following info sms profile for "u1":
         """

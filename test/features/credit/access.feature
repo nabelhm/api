@@ -7,27 +7,27 @@ Feature: Checking access
         """
         [
             {
-                "id": "a1",
-                "username": "admin1@server.local",
-                "password": "pass1",
+                "id": "u1",
+                "username": "admin@server.local",
+                "password": "pass",
                 "roles": ["ROLE_ADMIN"]
             },
             {
-                "id": "sms_reseller",
-                "username": "sms_reseller@muchacuba.local",
-                "password": "pass1",
+                "id": "u2",
+                "username": "info_sms_reseller@muchacuba.local",
+                "password": "pass",
                 "roles": ["ROLE_INFO_SMS_RESELLER"]
             },
             {
-                "id": "sms_journalist",
-                "username": "sms_journalist@muchacuba.local",
-                "password": "pass1",
+                "id": "u3",
+                "username": "info_sms_journalist@muchacuba.local",
+                "password": "pass",
                 "roles": ["ROLE_INFO_SMS_JOURNALIST"]
             },
             {
-                "id": "card_reseller",
-                "username": "card_reseller@muchacuba.local",
-                "password": "pass1",
+                "id": "u4",
+                "username": "recharge_card_reseller@muchacuba.local",
+                "password": "pass",
                 "roles": ["ROLE_RECHARGE_CARD_RESELLER"]
             }
         ]
@@ -36,50 +36,50 @@ Feature: Checking access
         And I set header "content-type" with value "application/json"
 
     Scenario: Accessing page pick profile
-        Given I am authenticating as "admin1@server.local" with "pass1" password
+        Given I am authenticating as "admin@server.local" with "pass" password
 
         When I send a GET request to "/credit/me/pick-profile"
 
         Then the response code should not be 403
 
-        Given I am authenticating as "sms_reseller@muchacuba.local" with "pass1" password
+        Given I am authenticating as "info_sms_reseller@muchacuba.local" with "pass" password
 
         When I send a GET request to "/credit/me/pick-profile"
 
         Then the response code should not be 403
 
-        Given I am authenticating as "sms_journalist@muchacuba.local" with "pass1" password
+        Given I am authenticating as "info_sms_journalist@muchacuba.local" with "pass" password
 
         When I send a GET request to "/credit/me/pick-profile"
 
         Then the response code should be 403
 
-        Given I am authenticating as "card_reseller@muchacuba.local" with "pass1" password
+        Given I am authenticating as "recharge_card_reseller@muchacuba.local" with "pass" password
 
         When I send a GET request to "/credit/me/pick-profile"
 
         Then the response code should be 403
 
     Scenario: Accessing page collect balance operation
-        Given I am authenticating as "admin1@server.local" with "pass1" password
+        Given I am authenticating as "admin@server.local" with "pass" password
 
         When I send a GET request to "/credit/me/profile/balance/collect-operations"
 
         Then the response code should not be 403
 
-        Given I am authenticating as "sms_reseller@muchacuba.local" with "pass1" password
+        Given I am authenticating as "info_sms_reseller@muchacuba.local" with "pass" password
 
         When I send a GET request to "/credit/me/profile/balance/collect-operations"
 
         Then the response code should not be 403
 
-        Given I am authenticating as "sms_journalist@muchacuba.local" with "pass1" password
+        Given I am authenticating as "info_sms_journalist@muchacuba.local" with "pass" password
 
         When I send a GET request to "/credit/me/profile/balance/collect-operations"
 
         Then the response code should be 403
 
-        Given I am authenticating as "card_reseller@muchacuba.local" with "pass1" password
+        Given I am authenticating as "recharge_card_reseller@muchacuba.local" with "pass" password
 
         When I send a GET request to "/credit/me/profile/balance/collect-operations"
 

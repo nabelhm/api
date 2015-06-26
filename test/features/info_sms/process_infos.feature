@@ -28,14 +28,14 @@ Feature: Processes info sms infos
         [
             {
                 "id": "a1",
-                "username": "admin1@server.local",
-                "password": "pass1",
+                "username": "admin@server.local",
+                "password": "pass",
                 "roles": ["ROLE_ADMIN"]
             },
             {
                 "id": "u1",
                 "username": "user1@server.local",
-                "password": "pass1",
+                "password": "pass",
                 "roles": ["ROLE_INFO_SMS_RESELLER"]
             }
         ]
@@ -43,7 +43,7 @@ Feature: Processes info sms infos
 
         And the info sms profile "u1" has a balance of 1000 sms
 
-        And I am authenticating as "admin1@server.local" with "pass1" password
+        And I am authenticating as "admin@server.local" with "pass" password
 
         And I set header "content-type" with value "application/json"
 

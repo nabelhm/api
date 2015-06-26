@@ -8,8 +8,8 @@ Feature: Pick profile
         [
             {
                 "id": "u1",
-                "username": "user1@muchacuba.local",
-                "password": "pass1",
+                "username": "info_sms_reseller@muchacuba.local",
+                "password": "pass",
                 "roles":[
                     "ROLE_RECHARGE_CARD_RESELLER",
                     "ROLE_INFO_SMS_JOURNALIST"
@@ -18,7 +18,7 @@ Feature: Pick profile
         ]
         """
 
-        And I am authenticating as "user1@muchacuba.local" with "pass1" password
+        And I am authenticating as "info_sms_reseller@muchacuba.local" with "pass" password
 
         And I set header "content-type" with value "application/json"
 
