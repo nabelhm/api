@@ -226,11 +226,14 @@ default:
                 - Muchacuba\Context
                 - Muchacuba\User\Context
                 - Muchacuba\RechargeCard\Context
-#
-#        user.manage_accounts:
-#            paths: [%paths.base%/test/features/user/manage_accounts.feature]
-#            contexts:
-#                - Behat\WebApiExtension\Context\WebApiContext
-#                - Muchacuba\WebApiDebugContext
-#                - Muchacuba\Context
-#                - Muchacuba\User\Context
+
+        user.manage_accounts:
+            paths: [%paths.base%/test/features/user/manage_accounts.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\Credit\Context
+                - Muchacuba\InfoSms\Context
+                - Muchacuba\Invitation\Context
+                - Muchacuba\User\Context
