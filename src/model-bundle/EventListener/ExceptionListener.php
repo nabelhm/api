@@ -30,6 +30,7 @@ class ExceptionListener
 
         $response = new JsonResponse(
             array(
+                'class' => get_class($exception),
                 'message' => $exception->getMessage(),
                 'code' => $exception->getCode(),
                 'file' => $exception->getFile(),
