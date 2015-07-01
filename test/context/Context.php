@@ -15,6 +15,7 @@ use Muchacuba\InfoSms\CollectSubscriptionsTestWorker;
 use Muchacuba\InfoSms\CollectTopicsTestWorker;
 use Muchacuba\InfoSms\Subscription\CollectOperationsTestWorker as CollectSubscriptionOperationsTestWorker;
 use Muchacuba\InfoSms\Subscription\LowBalanceReminder\CollectLogsTestWorker as CollectSubscriptionLowBalanceReminderLogsTestWorker;
+use Muchacuba\RechargeCard\CollectCategoriesTestWorker;
 use Symfony\Component\HttpKernel\KernelInterface;
 use PHPUnit_Framework_Assert as Assert;
 use Muchacuba\InfoSms\Message\CollectLinksTestWorker as CollectMessageLinksTestWorker;
@@ -55,6 +56,7 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
             'Muchacuba\InfoSms\Subscription\LowBalanceReminder\Log',
             'Muchacuba\InfoSms\Subscription\Operation',
             'Muchacuba\InfoSms\Topic',
+            'Muchacuba\RechargeCard\Category',
         ];
     }
 
@@ -145,6 +147,10 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
         /** @var CollectTopicsTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.info_sms.collect_topics_test_worker');
         $this->states['Muchacuba\InfoSms\Topic'] = iterator_to_array($collectWorker->collect());
+
+        /** @var CollectCategoriesTestWorker $collectWorker */
+        $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_categories_test_worker');
+        $this->states['Muchacuba\RechargeCard\Category'] = iterator_to_array($collectWorker->collect());
     }
 
     /**
@@ -331,6 +337,20 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 );
             } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
                 $this->throwException($e, 'Muchacuba\InfoSms\Topic');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\RechargeCard\Category'])) {
+            /** @var CollectCategoriesTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_categories_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\RechargeCard\Category'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\RechargeCard\Category');
             }
         }
     }

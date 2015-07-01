@@ -9,6 +9,9 @@ use Coduo\PHPMatcher\Factory\SimpleFactory;
 use Muchacuba\RechargeCard\Profile\IncreaseDebtTestWorker;
 use Symfony\Component\HttpKernel\KernelInterface;
 use PHPUnit_Framework_Assert as Assert;
+use Muchacuba\Context as RootContext;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Behat\Context\Environment\InitializedContextEnvironment;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -22,11 +25,29 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
     private $kernel;
 
     /**
+     * @var RootContext
+     */
+    private $rootContext;
+
+    /**
      * {@inheritdoc}
      */
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+    }
+
+    /**
+     * @BeforeScenario
+     *
+     * @param BeforeScenarioScope $scope
+     */
+    public function gatherRootContext(BeforeScenarioScope $scope)
+    {
+        /** @var InitializedContextEnvironment $environment */
+        $environment = $scope->getEnvironment();
+
+        $this->rootContext = $environment->getContext('Muchacuba\Context');
     }
 
     /**
@@ -142,5 +163,27 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 $expectedProfile
             )
         );
+    }
+
+    /**
+     * @Given the system should have the following categories:
+     *
+     * @param PyStringNode $body
+     */
+    public function theSystemShouldHaveTheFollowingCategories(PyStringNode $body)
+    {
+        /** @var CollectCategoriesTestWorker $collectCategoriesTestWorker */
+        $collectCategoriesTestWorker = $this->kernel
+            ->getContainer()
+            ->get('muchacuba.recharge_card.collect_categories_test_worker');
+
+        Assert::assertTrue(
+            (new SimpleFactory())->createMatcher()->match(
+                iterator_to_array($collectCategoriesTestWorker->collect()),
+                (array) json_decode($body->getRaw(), true)
+            )
+        );
+
+        $this->rootContext->ignoreState('Muchacuba\RechargeCard\Category');
     }
 }
