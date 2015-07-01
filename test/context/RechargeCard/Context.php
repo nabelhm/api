@@ -2,7 +2,10 @@
 
 namespace Muchacuba\RechargeCard;
 
+use Behat\Behat\Context\Environment\InitializedContextEnvironment;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Coduo\PHPMatcher\Factory\SimpleFactory;
@@ -10,8 +13,6 @@ use Muchacuba\RechargeCard\Profile\IncreaseDebtTestWorker;
 use Symfony\Component\HttpKernel\KernelInterface;
 use PHPUnit_Framework_Assert as Assert;
 use Muchacuba\Context as RootContext;
-use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Behat\Context\Environment\InitializedContextEnvironment;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -163,6 +164,28 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 $expectedProfile
             )
         );
+    }
+
+    /**
+     * @Then the system should have the following recharge card packages:
+     *
+     * @param PyStringNode $body
+     */
+    public function theSystemShouldHaveTheFollowingRechargeCardPackages(PyStringNode $body)
+    {
+        /** @var CollectPackagesTestWorker $collectPackagesTestWorker */
+        $collectPackagesTestWorker = $this->kernel
+            ->getContainer()
+            ->get('muchacuba.recharge_card.collect_packages_test_worker');
+
+        Assert::assertTrue(
+            (new SimpleFactory())->createMatcher()->match(
+                iterator_to_array($collectPackagesTestWorker->collect()),
+                (array) json_decode($body->getRaw(), true)
+            )
+        );
+
+        $this->rootContext->ignoreState('Muchacuba\RechargeCard\Package');
     }
 
     /**

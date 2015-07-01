@@ -24,6 +24,7 @@ use Muchacuba\Credit\Profile\Balance\CollectOperationsTestWorker as CollectCredi
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
+ * @author Nabel Hernandez <nabelhm@cubalider.com>
  */
 class Context implements SnippetAcceptingContext, KernelAwareContext
 {
@@ -56,6 +57,7 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
             'Muchacuba\InfoSms\Subscription\LowBalanceReminder\Log',
             'Muchacuba\InfoSms\Subscription\Operation',
             'Muchacuba\InfoSms\Topic',
+            'Muchacuba\RechargeCard\Package',
             'Muchacuba\RechargeCard\Category',
         ];
     }
@@ -147,6 +149,10 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
         /** @var CollectTopicsTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.info_sms.collect_topics_test_worker');
         $this->states['Muchacuba\InfoSms\Topic'] = iterator_to_array($collectWorker->collect());
+
+        /** @var CollectPackagesTestWorker $collectWorker */
+        $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_packages_test_worker');
+        $this->states['Muchacuba\RechargeCard\Package'] = iterator_to_array($collectWorker->collect());
 
         /** @var CollectCategoriesTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_categories_test_worker');
@@ -337,6 +343,20 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 );
             } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
                 $this->throwException($e, 'Muchacuba\InfoSms\Topic');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\RechargeCard\Package'])) {
+            /** @var CollectPackagesTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_packages_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\RechargeCard\Package'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\RechargeCard\Package');
             }
         }
 
