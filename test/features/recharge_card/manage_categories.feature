@@ -3,11 +3,7 @@
 Feature: Manage categories
 
     Background:
-        Given the system has the following recharge card categories:
-        """
-        """
-
-        And the system has the following user accounts:
+        Given the system has the following user accounts:
         """
         [
             {
@@ -45,6 +41,17 @@ Feature: Manage categories
         ]
         """
 
+        And the system should have the following categories:
+        """
+        [
+            {
+                "id": "@string@",
+                "name": "Category 1",
+                "utility": 10
+            }
+        ]
+        """
+
     Scenario: Collecting categories
         Given the system has the following recharge card categories:
         """
@@ -62,9 +69,26 @@ Feature: Manage categories
         ]
         """
         And I send a GET request to "/recharge-card/collect-categories"
+
         Then the response code should be 200
 
         And the response should contain json:
+        """
+        [
+            {
+                "id": "c1",
+                "name": "Category 1",
+                "utility": 10
+            },
+            {
+                "id": "c2",
+                "name": "Category 2",
+                "utility": 20
+            }
+        ]
+        """
+
+        And the system should have the following categories:
         """
         [
             {
@@ -112,6 +136,17 @@ Feature: Manage categories
         ]
         """
 
+        And the system should have the following categories:
+        """
+        [
+            {
+                "id": "c1",
+                "name": "Category 1",
+                "utility": 10
+            }
+        ]
+        """
+
     Scenario: Deleting a category
         Given the system has the following recharge card categories:
         """
@@ -129,6 +164,12 @@ Feature: Manage categories
         Then the response code should be 200
 
         And the response should contain json:
+        """
+        [
+        ]
+        """
+
+        And the system should have the following categories:
         """
         [
         ]
