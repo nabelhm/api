@@ -61,6 +61,19 @@ Feature: Manage packages
         ]
         """
 
+        And the system should have the following recharge card packages:
+        """
+        [
+            {
+                "id": "@string@",
+                "name": "Package 1",
+                "category": "c1",
+                "amount": 1000,
+                "price": 10
+            }
+        ]
+        """
+
     Scenario: Collecting packages
         Given the system has the following recharge card packages:
         """
@@ -87,6 +100,26 @@ Feature: Manage packages
         Then the response code should be 200
 
         And the response should contain json:
+        """
+        [
+            {
+                "id": "p1",
+                "name": "Package 1",
+                "category": "c1",
+                "amount": 1000,
+                "price": 10
+            },
+            {
+                "id": "p2",
+                "name": "Package 2",
+                "category": "c2",
+                "amount": 2000,
+                "price": 20
+            }
+        ]
+        """
+
+        And the system should have the following recharge card packages:
         """
         [
             {
@@ -145,6 +178,19 @@ Feature: Manage packages
         ]
         """
 
+        And the system should have the following recharge card packages:
+        """
+        [
+            {
+                "id": "p1",
+                "name": "Package 1",
+                "category": "c1",
+                "amount": 1000,
+                "price": 10
+            }
+        ]
+        """
+
     Scenario: Deleting a package
         Given the system has the following recharge card packages:
         """
@@ -164,6 +210,11 @@ Feature: Manage packages
         Then the response code should be 200
 
         And the response should contain json:
+        """
+        [
+        ]
+        """
+        And the system should have the following recharge card packages:
         """
         [
         ]
