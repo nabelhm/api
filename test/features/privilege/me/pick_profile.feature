@@ -22,7 +22,7 @@ Feature: Pick profile
 
         And I set header "content-type" with value "application/json"
 
-    Scenario: Picking the credit profile
+    Scenario: Picking the privilege profile
         When I send a GET request to "/privilege/me/pick-profile"
 
         Then the response code should be 200
