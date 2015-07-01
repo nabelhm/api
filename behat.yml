@@ -2,7 +2,7 @@ default:
     extensions:
           Behat\Symfony2Extension: ~
           Behat\WebApiExtension:
-              base_url: 'http://api.muchacuba.local/app_test.php/'
+              base_url: 'http://api.muchacuba.com/app_test.php/'
     suites:
         credit.me.profile.balance.collect_operations:
             paths: [%paths.base%/test/features/credit/me/profile/balance/collect_operations.feature]
