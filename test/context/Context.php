@@ -15,7 +15,9 @@ use Muchacuba\InfoSms\CollectSubscriptionsTestWorker;
 use Muchacuba\InfoSms\CollectTopicsTestWorker;
 use Muchacuba\InfoSms\Subscription\CollectOperationsTestWorker as CollectSubscriptionOperationsTestWorker;
 use Muchacuba\InfoSms\Subscription\LowBalanceReminder\CollectLogsTestWorker as CollectSubscriptionLowBalanceReminderLogsTestWorker;
+use Muchacuba\RechargeCard\CollectCardsTestWorker;
 use Muchacuba\RechargeCard\CollectCategoriesTestWorker;
+use Muchacuba\RechargeCard\CollectProfilesTestWorker;
 use Symfony\Component\HttpKernel\KernelInterface;
 use PHPUnit_Framework_Assert as Assert;
 use Muchacuba\InfoSms\Message\CollectLinksTestWorker as CollectMessageLinksTestWorker;
@@ -59,6 +61,8 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
             'Muchacuba\InfoSms\Topic',
             'Muchacuba\RechargeCard\Package',
             'Muchacuba\RechargeCard\Category',
+            'Muchacuba\RechargeCard\Card',
+            'Muchacuba\RechargeCard\Profile',
         ];
     }
 
@@ -157,6 +161,14 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
         /** @var CollectCategoriesTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_categories_test_worker');
         $this->states['Muchacuba\RechargeCard\Category'] = iterator_to_array($collectWorker->collect());
+
+        /** @var CollectCardsTestWorker $collectWorker */
+        $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_cards_test_worker');
+        $this->states['Muchacuba\RechargeCard\Card'] = iterator_to_array($collectWorker->collect());
+
+        /** @var CollectProfilesTestWorker $collectWorker */
+        $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_profiles_test_worker');
+        $this->states['Muchacuba\RechargeCard\Profile'] = iterator_to_array($collectWorker->collect());
     }
 
     /**
@@ -371,6 +383,34 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 );
             } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
                 $this->throwException($e, 'Muchacuba\RechargeCard\Category');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\RechargeCard\Card'])) {
+            /** @var CollectCardsTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_cards_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\RechargeCard\Card'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\RechargeCard\Card');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\RechargeCard\Profile'])) {
+            /** @var CollectProfilesTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_profiles_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\RechargeCard\Profile'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\RechargeCard\Profile');
             }
         }
     }

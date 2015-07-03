@@ -45,13 +45,20 @@ Feature: Liquidate debt
 
         And I am authenticating as "info_sms_reseller@muchacuba.local" with "pass" password
 
-        And the system should have the following recharge profile for "u1":
+        And the system should have the following recharge card profiles:
         """
-        {
-            "uniqueness": "u1",
-            "debt": 0,
-            "cards": []
-        }
+        [
+            {
+                "uniqueness": "u1",
+                "debt": 0,
+                "cards": []
+            },
+            {
+                "uniqueness": "u2",
+                "debt": 0,
+                "cards": []
+            }
+        ]
         """
 
         And the system should have the following recharge card profile debt operations for "u1":
@@ -87,13 +94,20 @@ Feature: Liquidate debt
 
         And I am authenticating as "info_sms_reseller@muchacuba.local" with "pass" password
 
-        And the system should have the following recharge profile for "u1":
+        And the system should have the following recharge card profiles:
         """
-        {
-            "uniqueness": "u1",
-            "debt": 200,
-            "cards": []
-        }
+        [
+            {
+                "uniqueness": "u1",
+                "debt": 200,
+                "cards": []
+            },
+            {
+                "uniqueness": "u2",
+                "debt": 0,
+                "cards": []
+            }
+        ]
         """
 
         And the system should have the following recharge card profile debt operations for "u1":

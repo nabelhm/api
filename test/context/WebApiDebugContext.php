@@ -37,7 +37,10 @@ class WebApiDebugContext implements SnippetAcceptingContext
      */
     public function printResponse(AfterStepScope $scope)
     {
-        if (!$scope->getTestResult()->isPassed() && $this->webApiContext->getRequest()) {
+        if (!$scope->getTestResult()->isPassed()
+            && $this->webApiContext->getRequest()
+            && $this->webApiContext->getResponse()
+        ) {
             $this->webApiContext->printResponse();
         }
     }
