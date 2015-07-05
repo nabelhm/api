@@ -2,8 +2,9 @@
 
 namespace Muchacuba\RechargeCard;
 
-use Muchacuba\RechargeCard\AssignedCard\ConnectToStorageInternalWorker;
+use Muchacuba\RechargeCard\Profile\ConnectToStorageInternalWorker;
 use JMS\DiExtraBundle\Annotation as Di;
+use Muchacuba\RechargeCard\Profile\NonExistentUniquenessInternalException;
 
 /**
  * @author Nabel Hernandez <nabelhm@cubalider.com>
@@ -22,7 +23,7 @@ class AssignCardsInternalWorker
      * @param ConnectToStorageInternalWorker $connectToStorageInternalWorker
      *
      * @Di\InjectParams({
-     *     "connectToStorageInternalWorker" = @Di\Inject("muchacuba.recharge_card.assigned_card.connect_to_storage_internal_worker")
+     *     "connectToStorageInternalWorker" = @Di\Inject("muchacuba.recharge_card.profile.connect_to_storage_internal_worker")
      * })
      */
     function __construct(ConnectToStorageInternalWorker $connectToStorageInternalWorker)
@@ -33,14 +34,30 @@ class AssignCardsInternalWorker
     /**
      * @param string   $uniqueness
      * @param string[] $cards
+     *
+     * @throws NonExistentUniquenessInternalException
      */
     public function assign($uniqueness, $cards)
     {
+        $profile = $this->connectToStorageInternalWorker->connect()
+            ->findOne($uniqueness);
+
+        if (!$profile) {
+            throw new NonExistentUniquenessInternalException($uniqueness);
+        }
+
         foreach ($cards as $i => $card) {
-            $this->connectToStorageInternalWorker->connect()->insert([
-                'uniqueness' => $uniqueness,
-                'card' => $card
-            ]);
+            $this->connectToStorageInternalWorker->connect()->update(
+                [
+                    'uniqueness' => $uniqueness
+                ],
+                [
+                    'cards' => array_merge(
+                        $profile['cards'],
+                        $cards
+                    )
+                ]
+            );
         }
     }
 }

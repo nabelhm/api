@@ -2,12 +2,15 @@
 
 namespace Muchacuba\Rechargecard\Profile\Debt;
 
+use Behat\Behat\Context\Environment\InitializedContextEnvironment;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Coduo\PHPMatcher\Factory\SimpleFactory;
 use Symfony\Component\HttpKernel\KernelInterface;
 use PHPUnit_Framework_Assert as Assert;
+use Muchacuba\Context as RootContext;
 
 /**
  * @author Nabel Hernandez <nabelhm@cubalider.com>
@@ -21,11 +24,29 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
     private $kernel;
 
     /**
+     * @var RootContext
+     */
+    private $rootContext;
+
+    /**
      * {@inheritdoc}
      */
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+    }
+
+    /**
+     * @BeforeScenario
+     *
+     * @param BeforeScenarioScope $scope
+     */
+    public function gatherRootContext(BeforeScenarioScope $scope)
+    {
+        /** @var InitializedContextEnvironment $environment */
+        $environment = $scope->getEnvironment();
+
+        $this->rootContext = $environment->getContext('Muchacuba\Context');
     }
 
     /**
@@ -77,5 +98,7 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 $expectedOperations
             )
         );
+
+        $this->rootContext->ignoreState('Muchacuba\RechargeCard\Profile\Debt\Operation');
     }
 }

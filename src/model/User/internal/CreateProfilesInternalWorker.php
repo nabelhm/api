@@ -165,7 +165,7 @@ class CreateProfilesInternalWorker
 
         $this->createCreditProfileSharedWorker->create($uniqueness, 0);
 
-        $this->createRechargeCardProfileSharedWorker->create($uniqueness, 0);
+        $this->createRechargeCardProfileSharedWorker->create($uniqueness, 0, []);
 
         $this->createInfoSmsProfileSharedWorker->create($uniqueness, 0);
     }

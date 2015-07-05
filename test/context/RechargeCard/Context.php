@@ -5,7 +5,6 @@ namespace Muchacuba\RechargeCard;
 use Behat\Behat\Context\Environment\InitializedContextEnvironment;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Coduo\PHPMatcher\Factory\SimpleFactory;
@@ -142,28 +141,25 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
     }
 
     /**
-     * @Then the system should have the following recharge profile for :uniqueness:
+     * @Then the system should have the following recharge card profiles:
      *
-     * @param string       $uniqueness
      * @param PyStringNode $body
      */
-    public function theSystemShouldHaveTheFollowingProfile($uniqueness, PyStringNode $body)
+    public function theSystemShouldHaveTheFollowingProfiles(PyStringNode $body)
     {
-        $expectedProfile = (array) json_decode($body->getRaw(), true);
-
-        /** @var PickProfileApiWorker $pickProfileApiWorker */
-        $pickProfileApiWorker = $this->kernel
+        /** @var CollectProfilesTestWorker $collectProfilesTestWorker */
+        $collectProfilesTestWorker = $this->kernel
             ->getContainer()
-            ->get('muchacuba.recharge_card.pick_profile_api_worker');
-
-        $actualProfile = $pickProfileApiWorker->pick($uniqueness);
+            ->get('muchacuba.recharge_card.collect_profiles_test_worker');
 
         Assert::assertTrue(
             (new SimpleFactory())->createMatcher()->match(
-                $actualProfile,
-                $expectedProfile
+                iterator_to_array($collectProfilesTestWorker->collect()),
+                (array) json_decode($body->getRaw(), true)
             )
         );
+
+        $this->rootContext->ignoreState('Muchacuba\RechargeCard\Profile');
     }
 
     /**

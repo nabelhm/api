@@ -19,26 +19,17 @@ class PickProfileApiWorker
     private $connectToStorageInternalWorker;
 
     /**
-     * @var CollectAssignedCardsInternalWorker
-     */
-    private $collectAssignedCardsInternalWorker;
-
-    /**
      * @param ConnectToStorageInternalWorker     $connectToStorageInternalWorker
-     * @param CollectAssignedCardsInternalWorker $collectAssignedCardsInternalWorker
      *
      * @Di\InjectParams({
      *     "connectToStorageInternalWorker"     = @Di\Inject("muchacuba.recharge_card.profile.connect_to_storage_internal_worker"),
-     *     "collectAssignedCardsInternalWorker" = @Di\Inject("muchacuba.recharge_card.collect_assigned_cards_internal_worker")
      * })
      */
     function __construct(
-        ConnectToStorageInternalWorker $connectToStorageInternalWorker,
-        CollectAssignedCardsInternalWorker $collectAssignedCardsInternalWorker
+        ConnectToStorageInternalWorker $connectToStorageInternalWorker
     )
     {
         $this->connectToStorageInternalWorker = $connectToStorageInternalWorker;
-        $this->collectAssignedCardsInternalWorker = $collectAssignedCardsInternalWorker;
     }
 
     /**
@@ -47,28 +38,27 @@ class PickProfileApiWorker
      * @param string $uniqueness
      *
      * @return array An array with the following keys:
-     *               uniqueness and cards.
+     *               uniqueness, debt and cards.
      *
      * @throws NonExistentUniquenessApiException
      */
     public function pick($uniqueness)
     {
         $profile = $this->connectToStorageInternalWorker->connect()
-            ->findOne([
+            ->findOne(
+                [
                 'uniqueness' => $uniqueness
-            ]);
+                ],
+                [
+                    '_id' => 0 // Exclude
+                ]
+            );
 
         if (!$profile) {
             throw new NonExistentUniquenessApiException();
         }
 
-        $cards = $this->collectAssignedCardsInternalWorker->collect($uniqueness);
-
-        return [
-            'uniqueness' => $profile['uniqueness'],
-            'debt' => $profile['debt'],
-            'cards' => $cards
-        ];
+        return $profile;
     }
 
 }

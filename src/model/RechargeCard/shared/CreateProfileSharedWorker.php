@@ -36,18 +36,20 @@ class CreateProfileSharedWorker
     /**
      * Creates a profile.
      *
-     * @param string $uniqueness
-     * @param int $debt
+     * @param string   $uniqueness
+     * @param int      $debt
+     * @param string[] $cards
      *
      * @throws ExistentUniquenessSharedException
      * @throws \MongoCursorException
      */
-    public function create($uniqueness, $debt)
+    public function create($uniqueness, $debt, $cards)
     {
         try {
             $this->connectToStorageInternalWorker->connect()->insert([
                 'uniqueness' => $uniqueness,
-                'debt' => $debt
+                'debt' => $debt,
+                'cards' => $cards
             ]);
         } catch (\MongoCursorException $e) {
             if (11000 == $e->getCode()) {
