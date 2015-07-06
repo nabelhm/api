@@ -46,8 +46,8 @@ class UpdateResellPackageApiWorker
         $result = $this->connectToStorageInternalWorker->connect()->update(
             array('id' => $id),
             array('$set' => array(
-                'amount' => $amount,
-                'price' => $price,
+                'amount' => (int) $amount,
+                'price' => (int) $price,
                 'description' => $description
             ))
         );

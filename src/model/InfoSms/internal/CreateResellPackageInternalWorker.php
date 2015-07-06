@@ -42,8 +42,8 @@ class CreateResellPackageInternalWorker
     {
         $this->connectToStorageInternalWorker->connect()->insert(array(
             'id' => $id,
-            'amount' => $amount,
-            'price' => $price,
+            'amount' => (int) $amount,
+            'price' => (int) $price,
             'description' => $description
         ));
     }

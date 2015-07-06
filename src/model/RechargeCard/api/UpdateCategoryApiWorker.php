@@ -46,7 +46,7 @@ class UpdateCategoryApiWorker
             array('id' => $id),
             array('$set' => array(
                 'name' => $name,
-                'utility' => $utility
+                'utility' => (int) $utility
             ))
         );
 

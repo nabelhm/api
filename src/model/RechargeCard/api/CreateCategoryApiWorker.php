@@ -40,7 +40,7 @@ class CreateCategoryApiWorker
         $this->createCategoryInternalWorker->create(
             uniqid(),
             $name,
-            $utility
+            (int) $utility
         );
     }
 }

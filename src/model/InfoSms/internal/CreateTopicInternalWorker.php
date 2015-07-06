@@ -47,7 +47,7 @@ class CreateTopicInternalWorker
             'description' => $description,
             'average' => $average,
             'active' => true,
-            'order' => $order
+            'order' => (int) $order
         ));
     }
 }

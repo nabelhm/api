@@ -43,8 +43,8 @@ class CreatePackageInternalWorker
         $this->connectToStorageInternalWorker->connect()->insert(array(
             'id' => $id,
             'name' => $name,
-            'amount' => $amount,
-            'price' => $price
+            'amount' => (int) $amount,
+            'price' => (int) $price
         ));
     }
 }

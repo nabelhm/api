@@ -68,8 +68,8 @@ class UpdatePackageApiWorker
             array('$set' => array(
                 'name' => $name,
                 'category' => $category,
-                'amount' => $amount,
-                'price' => $price
+                'amount' => (int) $amount,
+                'price' => (int) $price
             ))
         );
 

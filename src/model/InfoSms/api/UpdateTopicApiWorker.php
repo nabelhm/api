@@ -52,7 +52,7 @@ class UpdateTopicApiWorker
                 'description' => $description,
                 'average' => $average,
                 'active' => $active,
-                'order' => $order
+                'order' => (int) $order
             ))
         );
 
