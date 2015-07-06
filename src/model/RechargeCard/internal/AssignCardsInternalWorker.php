@@ -40,7 +40,9 @@ class AssignCardsInternalWorker
     public function assign($uniqueness, $cards)
     {
         $profile = $this->connectToStorageInternalWorker->connect()
-            ->findOne($uniqueness);
+            ->findOne([
+                'uniqueness' => $uniqueness
+            ]);
 
         if (!$profile) {
             throw new NonExistentUniquenessInternalException($uniqueness);
@@ -52,10 +54,12 @@ class AssignCardsInternalWorker
                     'uniqueness' => $uniqueness
                 ],
                 [
-                    'cards' => array_merge(
-                        $profile['cards'],
-                        $cards
-                    )
+                    '$set' => [
+                        'cards' => array_merge(
+                            $profile['cards'],
+                            $cards
+                        )
+                    ]
                 ]
             );
         }

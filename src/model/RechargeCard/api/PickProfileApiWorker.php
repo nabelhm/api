@@ -19,17 +19,26 @@ class PickProfileApiWorker
     private $connectToStorageInternalWorker;
 
     /**
-     * @param ConnectToStorageInternalWorker     $connectToStorageInternalWorker
+     * @var PickCardInternalWorker
+     */
+    private $pickCardInternalWorker;
+
+    /**
+     * @param ConnectToStorageInternalWorker $connectToStorageInternalWorker
+     * @param PickCardInternalWorker         $pickCardInternalWorker
      *
      * @Di\InjectParams({
-     *     "connectToStorageInternalWorker"     = @Di\Inject("muchacuba.recharge_card.profile.connect_to_storage_internal_worker"),
+     *     "connectToStorageInternalWorker" = @Di\Inject("muchacuba.recharge_card.profile.connect_to_storage_internal_worker"),
+     *     "pickCardInternalWorker"         = @Di\Inject("muchacuba.recharge_card.pick_card_internal_worker")
      * })
      */
     function __construct(
-        ConnectToStorageInternalWorker $connectToStorageInternalWorker
+        ConnectToStorageInternalWorker $connectToStorageInternalWorker,
+        PickCardInternalWorker $pickCardInternalWorker
     )
     {
         $this->connectToStorageInternalWorker = $connectToStorageInternalWorker;
+        $this->pickCardInternalWorker = $pickCardInternalWorker;
     }
 
     /**
@@ -56,6 +65,10 @@ class PickProfileApiWorker
 
         if (!$profile) {
             throw new NonExistentUniquenessApiException();
+        }
+
+        foreach ($profile['cards'] as $i => $card) {
+            $profile['cards'][$i] = $this->pickCardInternalWorker->pick($card);
         }
 
         return $profile;

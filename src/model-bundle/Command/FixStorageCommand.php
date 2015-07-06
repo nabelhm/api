@@ -5,7 +5,6 @@ namespace Muchacuba\ModelBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Muchacuba\RechargeCard\AssignedCard\ConnectToStorageInternalWorker as ConnectToRechargeCardAssignedCardStorageInternalWorker;
 use Muchacuba\RechargeCard\Profile\ConnectToStorageInternalWorker as ConnectToProfileStorageInternalWorker;
 
 /**
@@ -28,39 +27,36 @@ class FixStorageCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var ConnectToRechargeCardAssignedCardStorageInternalWorker $connectToRechargeCardAssignedCardStorageInternalWorker */
-        $connectToRechargeCardAssignedCardStorageInternalWorker = $this->getContainer()->get('muchacuba.recharge_card.assigned_card.connect_to_storage_internal_worker');
+        $client = new \MongoClient($this->getContainer()->getParameter('mongo_server'));
+        $db = $client->selectDB($this->getContainer()->getParameter('mongo_db'));
+        $assignedCardsCollection = $db->selectCollection('mc_recharge_card_assigned_cards');
 
         /** @var ConnectToProfileStorageInternalWorker $connectToProfileStorageInternalWorker */
         $connectToProfileStorageInternalWorker = $this->getContainer()->get('muchacuba.recharge_card.profile.connect_to_storage_internal_worker');
 
-        $assignedCards = $connectToRechargeCardAssignedCardStorageInternalWorker->connect()->find();
-        $assignedCardsByUniqueness = [];
-        foreach ($assignedCards as $assignedCard) {
-            if (!isset($assignedCardsByUniqueness[$assignedCard['uniqueness']])) {
-                $assignedCardsByUniqueness[$assignedCard['uniqueness']] = [];
+        $profiles = $connectToProfileStorageInternalWorker->connect()->find();
+        foreach ($profiles as $profile) {
+            $assignedCards = $assignedCardsCollection
+                ->find([
+                    'uniqueness' => $profile['uniqueness']
+                ]);
+            $cards = [];
+            foreach ($assignedCards as $card) {
+                $cards[] = $card['card'];
             }
-
-            $assignedCardsByUniqueness[$assignedCard['uniqueness']][] = $assignedCard['card'];
-        }
-
-        foreach ($assignedCardsByUniqueness as $uniqueness => $cards) {
-            $profile = $connectToProfileStorageInternalWorker->connect()->findOne([
-                'uniqueness' => $uniqueness
-            ]);
 
             $connectToProfileStorageInternalWorker->connect()->update(
                 [
-                    'uniqueness' => $uniqueness
+                    'uniqueness' => $profile['uniqueness']
                 ],
                 [
-                    'uniqueness' => $uniqueness,
+                    'uniqueness' => $profile['uniqueness'],
                     'debt' => $profile['debt'],
                     'cards' => $cards
                 ]
             );
         }
 
-        $connectToRechargeCardAssignedCardStorageInternalWorker->connect()->drop();
+        $assignedCardsCollection->drop();
     }
 }
