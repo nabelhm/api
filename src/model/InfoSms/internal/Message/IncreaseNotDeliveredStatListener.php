@@ -62,7 +62,7 @@ class IncreaseNotDeliveredStatListener
 
             $this->increaseNotDeliveredStatInternalWorker->increase($link['info']);
 
-            $this->deleteLinkInternalWorker->delete($event->getMessage());
+            //$this->deleteLinkInternalWorker->delete($event->getMessage());
         } catch (NonExistentMessageInternalException $e) {
         }
     }

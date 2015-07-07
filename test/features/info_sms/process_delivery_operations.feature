@@ -152,4 +152,28 @@ Feature: Process delivery operations
         ]
         """
 
+        And the system should have the following info sms subscriptions for "u1":
+        """
+        [
+            {
+                "uniqueness": "u1",
+                "mobile": "+5312345678",
+                "alias": "client1",
+                "topics": ["t1"],
+                "trial": 0,
+                "balance": 99,
+                "active": true
+            },
+            {
+                "uniqueness": "u1",
+                "mobile": "+5312345679",
+                "alias": "client1",
+                "topics": ["t1", "t2"],
+                "trial": 0,
+                "balance": 99,
+                "active": true
+            }
+        ]
+        """
+
 
