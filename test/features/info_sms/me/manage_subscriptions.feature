@@ -956,7 +956,7 @@ Feature: Manage subscriptions
             {
                 "message": "@string@",
                 "receiver": "+5312345678",
-                "body": "El saldo de tu subscripcion es de solo 3 sms. Cuando llegue a 0 no recibiras mas noticias. Recarga con la persona que hiciste la subscripcion para seguir recibiendo noticias."
+                "body": "El saldo de tu subscripcion es de 3 sms. Recarga con la persona que hiciste la subscripcion para seguir recibiendo noticias."
             }
         ]
         """

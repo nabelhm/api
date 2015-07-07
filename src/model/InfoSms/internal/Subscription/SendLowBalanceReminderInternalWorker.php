@@ -57,7 +57,7 @@ class SendLowBalanceReminderInternalWorker
         $this->enqueueMessageApiWorker->enqueue(
             $mobile,
             sprintf(
-                "El saldo de tu subscripcion es de solo %s sms. Cuando llegue a 0 no recibiras mas noticias. Recarga con la persona que hiciste la subscripcion para seguir recibiendo noticias.",
+                "El saldo de tu subscripcion es de %s sms. Recarga con la persona que hiciste la subscripcion para seguir recibiendo noticias.",
                 $balance
             )
         );
