@@ -194,6 +194,7 @@ default:
                 - Muchacuba\Context
                 - Muchacuba\User\Context
                 - Muchacuba\Credit\Context
+                - Muchacuba\Credit\Profile\Balance\Context
                 - Muchacuba\RechargeCard\Context
 
         recharge_card.access:
