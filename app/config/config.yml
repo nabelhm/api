@@ -85,3 +85,13 @@ nelmio_cors:
 jms_di_extra:
     locations:
         directories: ["%kernel.root_dir%/../src", "%kernel.root_dir%/../src-vendor"]
+
+knp_snappy:
+    pdf:
+        enabled:    true
+        binary:     /usr/bin/wkhtmltopdf.sh
+        options:    []
+    image:
+        enabled:    true
+        binary:     /usr/bin/wkhtmltopdf.sh
+        options:    []

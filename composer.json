@@ -123,7 +123,8 @@
         "jms/di-extra-bundle": "1.4.*",
         "respect/validation": "0.8.*",
         "escapestudios/wsse-authentication-bundle": "2.3.x-dev",
-        "willdurand/faker-bundle": "1.2"
+        "willdurand/faker-bundle": "1.2",
+        "knplabs/knp-snappy-bundle": "1.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3",

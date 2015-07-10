@@ -46,6 +46,7 @@ security:
         - { path: ^/info-sms/me/recharge-subscription/[^/]+, roles: ROLE_INFO_SMS_RESELLER }
         - { path: ^/info-sms/me/update-subscription/[^/]+, roles: ROLE_INFO_SMS_RESELLER }
         - { path: ^/info-sms/message/collect-latest-stats, roles: [ROLE_INFO_SMS_JOURNALIST, ROLE_INFO_SMS_RESELLER] }
+        - { path: ^/info-sms/message/generate-latest-stats, roles: [ROLE_INFO_SMS_RESELLER] }
         - { path: ^/info-sms/subscription/[^/]+/[^/]+/[^/]+/compute-operations-from-topic-between-dates, roles: [ROLE_INFO_SMS_JOURNALIST] }
         - { path: ^/info-sms/subscription/[^/]+/[^/]+/compute-operations-until-date, roles: [ROLE_INFO_SMS_JOURNALIST] }
         - { path: ^/info-sms/collect-archived-infos, roles: ROLE_INFO_SMS_JOURNALIST }

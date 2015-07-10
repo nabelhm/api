@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Escape\WSSEAuthenticationBundle\EscapeWSSEAuthenticationBundle(),
             new Bazinga\Bundle\FakerBundle\BazingaFakerBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
 
             new Cubalider\CodeGeneratorBundle\CubaliderCodeGeneratorBundle(),
             new Cubalider\SecurityAsserterBundle\CubaliderSecurityAsserterBundle(),
