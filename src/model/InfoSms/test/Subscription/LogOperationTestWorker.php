@@ -24,43 +24,47 @@ class LogOperationTestWorker
      *     "logOperationInternalWorker" = @Di\Inject("muchacuba.info_sms.subscription.log_operation_internal_worker")
      * })
      */
-    public function __construct(
-        LogOperationInternalWorker $logOperationInternalWorker
-    ) {
+    function __construct(
+        LogOperationInternalWorker $logOperationInternalWorker)
+    {
         $this->logOperationInternalWorker = $logOperationInternalWorker;
     }
 
     /**
-     * Creates a trial log.
+     * Logs a trial operation.
      *
      * @param string   $mobile
      * @param string   $uniqueness
      * @param string[] $topics
+     * @param int      $timestamp
      */
-    public function logTrial($mobile, $uniqueness, $topics)
+    public function logTrial($mobile, $uniqueness, $topics, $timestamp)
     {
         $this->logOperationInternalWorker->logTrial(
             $mobile,
             $uniqueness,
-            $topics
+            $topics,
+            $timestamp
         );
     }
 
     /**
-     * Creates a create log.
+     * Logs a create operation.
      *
      * @param string   $mobile
      * @param string   $uniqueness
      * @param string[] $topics
      * @param int      $amount
+     * @param int      $timestamp
      */
-    public function logCreate($mobile, $uniqueness, $topics, $amount)
+    public function logCreate($mobile, $uniqueness, $topics, $amount, $timestamp)
     {
         $this->logOperationInternalWorker->logCreate(
             $mobile,
             $uniqueness,
             $topics,
-            $amount
+            $amount,
+            $timestamp
         );
     }
 }

@@ -40,10 +40,21 @@ class CollectOperationsTestWorker
      */
     public function collect()
     {
-        return $this->connectToOperationStorageInternalWorker->connect()
+        $cursor = $this->connectToOperationStorageInternalWorker->connect()
             ->find()
             ->fields([
                 '_id' => 0 // Exclude
             ]);
+
+        $operations = [];
+        foreach ($cursor as $i => $operation) {
+            /** @var \MongoDate $timestamp */
+            $timestamp = $operation['timestamp'];
+            $operation['timestamp'] = $timestamp->sec;
+
+            $operations[] = $operation;
+        }
+
+        return new \ArrayIterator($operations);
     }
 }

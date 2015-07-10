@@ -9,9 +9,7 @@ use Behat\Behat\Hook\Scope\BeforeScenarioScope;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Coduo\PHPMatcher\Factory\SimpleFactory;
-use Muchacuba\InfoSms\Subscription\LowBalanceReminder\CreateLogTestWorker;
 use Symfony\Component\HttpKernel\KernelInterface;
-use PHPUnit_Framework_Assert as Assert;
 use Muchacuba\Context as RootContext;
 
 /**
@@ -69,7 +67,8 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
             $logOperationTestWorker->logTrial(
                 $item['mobile'],
                 $item['uniqueness'],
-                $item['topics']
+                $item['topics'],
+                $item['timestamp']
             );
         }
 
@@ -95,7 +94,8 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 $item['mobile'],
                 $item['uniqueness'],
                 $item['topics'],
-                $item['amount']
+                $item['amount'],
+                $item['timestamp']
             );
         }
 
@@ -114,12 +114,11 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
             ->getContainer()
             ->get('muchacuba.info_sms.subscription.collect_operations_test_worker');
 
-        Assert::assertTrue(
-            (new SimpleFactory())->createMatcher()->match(
-                iterator_to_array($collectOperationsTestWorker->collect()),
-                (array) json_decode($body->getRaw(), true)
-            )
-        );
+        $expected = (array) json_decode($body->getRaw(), true);
+        $actual = iterator_to_array($collectOperationsTestWorker->collect());
+
+        (new SimpleFactory())->createMatcher()->match($actual, $expected)
+            ?: (new \PHPUnit_Framework_Constraint_IsEqual($expected))->evaluate($actual);
 
         $this->rootContext->ignoreState('Muchacuba\InfoSms\Subscription\Operation');
     }

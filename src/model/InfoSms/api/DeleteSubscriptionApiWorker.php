@@ -88,7 +88,8 @@ class DeleteSubscriptionApiWorker
             $uniqueness,
             $subscription['topics'],
             $subscription['trial'],
-            $subscription['balance']
+            $subscription['balance'],
+            time()
         );
     }
 }

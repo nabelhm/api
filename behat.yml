@@ -67,6 +67,24 @@ default:
                 - Muchacuba\InfoSms\Context
                 - Muchacuba\InfoSms\Profile\Context
 
+        info_sms.subscription.compute_operations_from_topic_between_dates:
+            paths: [%paths.base%/test/features/info_sms/subscription/compute_operations_from_topic_between_dates.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Subscription\Context
+
+        info_sms.subscription.compute_operations_from_topic_until_date:
+            paths: [%paths.base%/test/features/info_sms/subscription/compute_operations_from_topic_until_date.feature]
+            contexts:
+                - Behat\WebApiExtension\Context\WebApiContext
+                - Muchacuba\WebApiDebugContext
+                - Muchacuba\Context
+                - Muchacuba\User\Context
+                - Muchacuba\InfoSms\Subscription\Context
+
         info_sms.access:
             paths: [%paths.base%/test/features/info_sms/access.feature]
             contexts:

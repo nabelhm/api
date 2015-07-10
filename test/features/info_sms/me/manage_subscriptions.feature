@@ -113,12 +113,10 @@ Feature: Manage subscriptions
         [
             {
                 "type": 0,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
-                "topics": ["t1"]
+                "topics": ["t1"],
+                "timestamp": "@integer@"
             }
         ]
         """
@@ -182,13 +180,11 @@ Feature: Manage subscriptions
         [
             {
                 "type": 1,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1"],
-                "amount": 100
+                "amount": 100,
+                "timestamp": "@integer@"
             }
         ]
         """
@@ -221,7 +217,8 @@ Feature: Manage subscriptions
             {
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
-                "topics": ["t1"]
+                "topics": ["t1"],
+                "timestamp": 1440043200
             }
         ]
         """
@@ -273,22 +270,18 @@ Feature: Manage subscriptions
         [
             {
                 "type": 0,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "mobile": "+5312345678",
-                "uniqueness": "u1",
-                "topics": ["t1"]
-            },
-            {
-                "type": 1,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1"],
-                "amount": 100
+                "timestamp": "@integer@"
+            },
+            {
+                "type": 1,
+                "mobile": "+5312345678",
+                "uniqueness": "u1",
+                "topics": ["t1"],
+                "amount": 100,
+                "timestamp": "@integer@"
             }
         ]
         """
@@ -317,7 +310,8 @@ Feature: Manage subscriptions
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1"],
-                "amount": 100
+                "amount": 100,
+                "timestamp": 1440043200
             }
         ]
         """
@@ -369,23 +363,19 @@ Feature: Manage subscriptions
         [
             {
                 "type": 1,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1"],
-                "amount": 100
+                "amount": 100,
+                "timestamp": "@integer@"
             },
             {
                 "type": 1,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1"],
-                "amount": 100
+                "amount": 100,
+                "timestamp": "@integer@"
             }
         ]
         """
@@ -454,13 +444,11 @@ Feature: Manage subscriptions
         [
             {
                 "type": 1,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1"],
-                "amount": 100
+                "amount": 100,
+                "timestamp": "@integer@"
             }
         ]
         """
@@ -608,7 +596,8 @@ Feature: Manage subscriptions
             {
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
-                "topics": ["t1"]
+                "topics": ["t1"],
+                "timestamp": 1440043200
             }
         ]
         """
@@ -696,13 +685,11 @@ Feature: Manage subscriptions
         [
             {
                 "type": 1,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1"],
-                "amount": 100
+                "amount": 100,
+                "timestamp": "@integer@"
             }
         ]
         """
@@ -790,15 +777,13 @@ Feature: Manage subscriptions
         [
             {
                 "type": 2,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1", "t2"],
                 "trial": 0,
                 "balance": 0,
-                "amount": 100
+                "amount": 100,
+                "timestamp": "@integer@"
             }
         ]
         """
@@ -1208,14 +1193,12 @@ Feature: Manage subscriptions
         [
             {
                 "type": 3,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1"],
                 "trial": 0,
-                "balance": 100
+                "balance": 100,
+                "timestamp": "@integer@"
             }
         ]
         """
@@ -1261,14 +1244,12 @@ Feature: Manage subscriptions
         [
             {
                 "type": 3,
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
                 "mobile": "+5312345678",
                 "uniqueness": "u1",
                 "topics": ["t1"],
                 "trial": 10,
-                "balance": 80
+                "balance": 80,
+                "timestamp": "@integer@"
             }
         ]
         """

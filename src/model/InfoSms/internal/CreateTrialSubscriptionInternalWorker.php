@@ -110,7 +110,8 @@ class CreateTrialSubscriptionInternalWorker
         $this->logOperationInternalWorker->logTrial(
             $mobile,
             $uniqueness,
-            $topics
+            $topics,
+            time()
         );
     }
 }

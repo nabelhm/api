@@ -205,7 +205,8 @@ class RechargeSubscriptionApiWorker
             $topics,
             $subscription['trial'],
             $subscription['balance'],
-            $resellPackage['amount']
+            $resellPackage['amount'],
+            time()
         );
 
         try {

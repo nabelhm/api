@@ -10,7 +10,7 @@ use Muchacuba\InfoSms\Subscription\Operation\ConnectToStorageInternalWorker as C
  *
  * @Di\Service()
  */
-class CollectOperationsByTopicFromCurrentWeekApiWorker
+class ComputeOperationsFromTopicUntilDateApiWorker
 {
     /**
      * @var ConnectToOperationStorageInternalWorker
@@ -30,62 +30,42 @@ class CollectOperationsByTopicFromCurrentWeekApiWorker
     }
 
     /**
-     * @param string $topic
-     * @param string $initialDay
-     * @param string $finalDay
+     * @param string  $topic
+     * @param string  $until
      *
      * @return int[]
+     *
+     * @throws InvalidGroupApiException
      */
-    public function collect($topic, $initialDay, $finalDay)
+    public function compute($topic, $until)
     {
-//        $initialDay = (string) (date('d') - date('N'));
-//        if (strlen($initialDay) == 1) {
-//            $initialDay = sprintf("0%s", $initialDay);
-//        }
-//        $finalDay = (string) (date('d') + 6 - date('N'));
-
         $response = $this->connectToOperationStorageInternalWorker->connect()
             ->aggregate(
                 [
                     ['$match' => [
                         'topics' => $topic,
-                        'year' => date('Y'),
-                        'month' => date('m'),
-                        'day' => [
-                            '$gte' => $initialDay,
-                            '$lte' => $finalDay
+                        'timestamp' => [
+                            '$lt' => new \MongoDate($until),
                         ]
                     ]],
                     ['$group' => [
                         '_id' => [
-                            'day' => '$day',
                             'type' => '$type'
                         ],
                         'total' => [
                             '$sum' => 1
                         ]
-                    ]]
+                    ]],
+                    ['$sort' => ['_id' => 1]]
                 ]
             );
 
         $stats = [];
-        $existent = 0;
-        for ($i = (int) $initialDay; $i <= (int) $finalDay; $i++) {
-            $current = 0;
-            foreach ($response['result'] as $item) {
-                if ($i == (int) $item['_id']['day']) {
-                    if ($item['_id']['type'] == 0 || $item['_id']['type'] == 1) {
-                        $current += $item['total'];
-                    }
-
-                    if ($item['_id']['type'] == 3) {
-                        $current -= $item['total'];
-                    }
-                }
-            }
-
-            $stats[] += $existent + $current;
-            $existent += $current;
+        foreach ($response['result'] as $item) {
+            $stats[] = [
+                'total' => $item['total'],
+                'type' => $item['_id']['type']
+            ];
         }
 
         return $stats;

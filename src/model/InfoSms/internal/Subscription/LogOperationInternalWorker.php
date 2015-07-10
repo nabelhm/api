@@ -37,22 +37,16 @@ class LogOperationInternalWorker
      * @param string   $mobile
      * @param string   $uniqueness
      * @param string[] $topics
+     * @param int      $timestamp
      */
-    public function logTrial($mobile, $uniqueness, $topics)
+    public function logTrial($mobile, $uniqueness, $topics, $timestamp)
     {
-        $today = time();
-        $year = date('Y', $today);
-        $month = date('m', $today);
-        $day = date('d', $today);
-
         $this->connectToOperationStorageInternalWorker->connect()->insert([
             'type' => 0,
-            'year' => $year,
-            'month' => $month,
-            'day' => $day,
             'mobile' => $mobile,
             'uniqueness' => $uniqueness,
-            'topics' => $topics
+            'topics' => $topics,
+            'timestamp' => new \MongoDate($timestamp)
         ]);
     }
 
@@ -63,23 +57,17 @@ class LogOperationInternalWorker
      * @param string   $uniqueness
      * @param string[] $topics
      * @param int      $amount
+     * @param int      $timestamp
      */
-    public function logCreate($mobile, $uniqueness, $topics, $amount)
+    public function logCreate($mobile, $uniqueness, $topics, $amount, $timestamp)
     {
-        $today = time();
-        $year = date('Y', $today);
-        $month = date('m', $today);
-        $day = date('d', $today);
-
         $this->connectToOperationStorageInternalWorker->connect()->insert([
             'type' => 1,
-            'year' => $year,
-            'month' => $month,
-            'day' => $day,
             'mobile' => $mobile,
             'uniqueness' => $uniqueness,
             'topics' => $topics,
-            'amount' => $amount
+            'amount' => $amount,
+            'timestamp' => new \MongoDate($timestamp)
         ]);
     }
 
@@ -92,25 +80,19 @@ class LogOperationInternalWorker
      * @param int      $trial
      * @param int      $balance
      * @param int      $amount
+     * @param int      $timestamp
      */
-    public function logRecharge($mobile, $uniqueness, $topics, $trial, $balance, $amount)
+    public function logRecharge($mobile, $uniqueness, $topics, $trial, $balance, $amount, $timestamp)
     {
-        $today = time();
-        $year = date('Y', $today);
-        $month = date('m', $today);
-        $day = date('d', $today);
-
         $this->connectToOperationStorageInternalWorker->connect()->insert([
             'type' => 2,
-            'year' => $year,
-            'month' => $month,
-            'day' => $day,
             'mobile' => $mobile,
             'uniqueness' => $uniqueness,
             'topics' => $topics,
             'trial' => $trial,
             'balance' => $balance,
-            'amount' => $amount
+            'amount' => $amount,
+            'timestamp' => new \MongoDate($timestamp)
         ]);
     }
 
@@ -122,24 +104,18 @@ class LogOperationInternalWorker
      * @param string[] $topics
      * @param int      $trial
      * @param int      $balance
+     * @param int      $timestamp
      */
-    public function logDelete($mobile, $uniqueness, $topics, $trial, $balance)
+    public function logDelete($mobile, $uniqueness, $topics, $trial, $balance, $timestamp)
     {
-        $today = time();
-        $year = date('Y', $today);
-        $month = date('m', $today);
-        $day = date('d', $today);
-
         $this->connectToOperationStorageInternalWorker->connect()->insert([
             'type' => 3,
-            'year' => $year,
-            'month' => $month,
-            'day' => $day,
             'mobile' => $mobile,
             'uniqueness' => $uniqueness,
             'topics' => $topics,
             'trial' => $trial,
-            'balance' => $balance
+            'balance' => $balance,
+            'timestamp' => new \MongoDate($timestamp)
         ]);
     }
 }

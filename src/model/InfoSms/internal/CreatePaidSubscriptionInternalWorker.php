@@ -10,8 +10,6 @@ use Muchacuba\InfoSms\Subscription\CheckOperationInternalWorker;
 use Muchacuba\InfoSms\Subscription\ExistentMobileInternalException;
 use Muchacuba\InfoSms\Subscription\InsufficientBalanceInternalException;
 use Muchacuba\InfoSms\Subscription\LogOperationInternalWorker;
-use Muchacuba\InfoSms\ResellPackage\NonExistentIdInternalException as NonExistentResellPackageInternalException;
-use Muchacuba\InfoSms\Subscription\NoResellPackageInternalException;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -145,7 +143,8 @@ class CreatePaidSubscriptionInternalWorker
             $mobile,
             $uniqueness,
             $topics,
-            $resellPackage['amount']
+            $resellPackage['amount'],
+            time()
         );
     }
 }

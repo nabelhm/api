@@ -5,7 +5,7 @@ namespace Muchacuba\ModelBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Muchacuba\RechargeCard\Profile\ConnectToStorageInternalWorker as ConnectToProfileStorageInternalWorker;
+use Muchacuba\InfoSms\Subscription\Operation\ConnectToStorageInternalWorker as ConnectToSubscriptionOperationStorageInternalWorker;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -27,36 +27,28 @@ class FixStorageCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $client = new \MongoClient($this->getContainer()->getParameter('mongo_server'));
-        $db = $client->selectDB($this->getContainer()->getParameter('mongo_db'));
-        $assignedCardsCollection = $db->selectCollection('mc_recharge_card_assigned_cards');
+        /** @var ConnectToSubscriptionOperationStorageInternalWorker $connectToSubscriptionOperationStorageInternalWorker */
+        $connectToSubscriptionOperationStorageInternalWorker = $this->getContainer()->get('muchacuba.info_sms.subscription.operation.connect_to_storage_internal_worker');
 
-        /** @var ConnectToProfileStorageInternalWorker $connectToProfileStorageInternalWorker */
-        $connectToProfileStorageInternalWorker = $this->getContainer()->get('muchacuba.recharge_card.profile.connect_to_storage_internal_worker');
-
-        $profiles = $connectToProfileStorageInternalWorker->connect()->find();
-        foreach ($profiles as $profile) {
-            $assignedCards = $assignedCardsCollection
-                ->find([
-                    'uniqueness' => $profile['uniqueness']
-                ]);
-            $cards = [];
-            foreach ($assignedCards as $card) {
-                $cards[] = $card['card'];
-            }
-
-            $connectToProfileStorageInternalWorker->connect()->update(
+        $operations = $connectToSubscriptionOperationStorageInternalWorker->connect()->find();
+        foreach ($operations as $operation) {
+            $connectToSubscriptionOperationStorageInternalWorker->connect()->update(
                 [
-                    'uniqueness' => $profile['uniqueness']
+                    '_id' => $operation['_id']
                 ],
                 [
-                    'uniqueness' => $profile['uniqueness'],
-                    'debt' => $profile['debt'],
-                    'cards' => $cards
+                    'mobile' => $operation['mobile'],
+                    'uniqueness' => $operation['uniqueness'],
+                    'topics' => $operation['topics'],
+                    'type' => $operation['type'],
+                    'timestamp' => new \MongoDate(strtotime(sprintf(
+                        "%s-%s-%s",
+                        $operation['year'],
+                        $operation['month'],
+                        $operation['day']
+                    )))
                 ]
             );
         }
-
-        $assignedCardsCollection->drop();
     }
 }
