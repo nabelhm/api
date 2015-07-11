@@ -7,6 +7,7 @@ use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Cubalider\Sms\CollectMessagesTestWorker;
 use Cubalider\Unique\CollectUniquenessTestWorker;
+use Muchacuba\Authentication\CollectProfilesTestWorker as CollectAuthenticationProfilesTestWorker;
 use Muchacuba\InfoSms\CollectInfosTestWorker;
 use Muchacuba\InfoSms\CollectPackagesTestWorker;
 use Muchacuba\InfoSms\CollectProfilesTestWorker as CollectInfoSmsProfilesTestWorker;
@@ -21,6 +22,7 @@ use Muchacuba\Mobile\CollectProfilesTestWorker as  CollectMobileProfilesTestWork
 use Muchacuba\Privilege\CollectAssignedRolesTestWorker;
 use Muchacuba\RechargeCard\CollectCardsTestWorker;
 use Muchacuba\RechargeCard\CollectCategoriesTestWorker;
+use Muchacuba\RechargeCard\CollectProfilesTestWorker as CollectRechargeCardProfilesTestWorker;
 use Muchacuba\RechargeCard\CollectProfilesTestWorker;
 use Symfony\Component\HttpKernel\KernelInterface;
 use PHPUnit_Framework_Assert as Assert;
@@ -52,6 +54,7 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
         $this->states = [
             'Cubalider\Sms\Message',
             'Cubalider\Uniqueness',
+            'Muchacuba\Authentication\Profile',
             'Muchacuba\Credit\Profile',
             'Muchacuba\Credit\Profile\Balance\Operation',
             'Muchacuba\InfoSms\Info',
@@ -69,6 +72,7 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
             'Muchacuba\Privilege\AssignedRoles',
             'Muchacuba\RechargeCard\Package',
             'Muchacuba\RechargeCard\Category',
+            'Muchacuba\RechargeCard\Profile'
             'Muchacuba\RechargeCard\Card',
             'Muchacuba\RechargeCard\Profile',
         ];
@@ -118,6 +122,10 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
         $collectWorker = $this->kernel->getContainer()->get('cubalider.unique.collect_uniqueness_test_worker');
         $this->states['Cubalider\Uniqueness'] = iterator_to_array($collectWorker->collect());
 
+        /** @var CollectAuthenticationProfilesTestWorker $collectWorker */
+        $collectWorker = $this->kernel->getContainer()->get('muchacuba.authentication.collect_profiles_test_worker');
+        $this->states['Muchacuba\Authentication\Profile'] = iterator_to_array($collectWorker->collect());
+
         /** @var CollectCreditProfilesTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.credit.collect_profiles_test_worker');
         $this->states['Muchacuba\Credit\Profile'] = iterator_to_array($collectWorker->collect());
@@ -164,7 +172,7 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
 
         /** @var CollectTopicsTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.info_sms.collect_topics_test_worker');
-        $this->states['Muchacuba\Internet\Profile'] = iterator_to_array($collectWorker->collect());
+        $this->states['Muchacuba\Topics\Profile'] = iterator_to_array($collectWorker->collect());
 
         /** @var CollectInternetProfilesTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.internet.collect_profiles_test_worker');
@@ -185,6 +193,10 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
         /** @var CollectCategoriesTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_categories_test_worker');
         $this->states['Muchacuba\RechargeCard\Category'] = iterator_to_array($collectWorker->collect());
+
+        /** @var CollectRechargeCardProfilesTestWorker $collectWorker */
+        $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_profiles_test_worker');
+        $this->states['Muchacuba\RechargeCard\Profile'] = iterator_to_array($collectWorker->collect());
 
         /** @var CollectCardsTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_cards_test_worker');
@@ -225,6 +237,20 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 );
             } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
                 $this->throwException($e, 'Cubalider\Uniqueness');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\Authentication\Profile'])) {
+            /** @var CollectAuthenticationProfilesTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.authentication.collect_profiles_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\Authentication\Profile'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\Authentication\Profile');
             }
         }
 
@@ -398,7 +424,7 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
 
         if (isset($this->states['Muchacuba\Internet\Profile'])) {
             /** @var CollectInternetProfilesTestWorker $collectWorker */
-            $collectWorker = $this->kernel->getContainer()->get('muchacuba.internet.collect_mobile_profiles_test_worker');
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.internet.collect_profiles_test_worker');
 
             try {
                 Assert::assertEquals(
@@ -412,7 +438,7 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
 
         if (isset($this->states['Muchacuba\Mobile\Profile'])) {
             /** @var CollectMobileProfilesTestWorker $collectWorker */
-            $collectWorker = $this->kernel->getContainer()->get('muchacuba.mobile.collect_mobile_profiles_test_worker');
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.mobile.collect_profiles_test_worker');
 
             try {
                 Assert::assertEquals(
@@ -463,6 +489,20 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 );
             } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
                 $this->throwException($e, 'Muchacuba\RechargeCard\Category');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\RechargeCard\Profile'])) {
+            /** @var CollectCategoriesTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.recharge_card.collect_profiles_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\RechargeCard\Profile'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\RechargeCard\Profile');
             }
         }
 

@@ -134,6 +134,8 @@ class CreateProfilesInternalWorker
     public function create($uniqueness, $username, $password, $roles)
     {
         if ($password === '') {
+            $this->deleteUniquenessSharedWorker->delete($uniqueness);
+
             throw new EmptyPasswordInternalException();
         }
 

@@ -274,9 +274,15 @@ default:
             paths: [%paths.base%/test/features/user/manage_accounts.feature]
             contexts:
                 - Behat\WebApiExtension\Context\WebApiContext
+                - Cubalider\Unique\UniquenessContext
                 - Muchacuba\WebApiDebugContext
                 - Muchacuba\Context
+                - Muchacuba\Authentication\Context
                 - Muchacuba\Credit\Context
                 - Muchacuba\InfoSms\Context
+                - Muchacuba\Internet\Context
                 - Muchacuba\Invitation\Context
+                - Muchacuba\Mobile\Context
+                - Muchacuba\Privilege\Context
+                - Muchacuba\RechargeCard\Context
                 - Muchacuba\User\Context
