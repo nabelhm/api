@@ -20,7 +20,13 @@ Feature: Manage accounts
         [
             {
                 "code": "12-34-56",
-                "role": "ROLE_INFO_SMS_RESELLER"
+                "role": "ROLE_INFO_SMS_RESELLER",
+                "consumed":false
+            },
+            {
+                "code": "12-34-57",
+                "role": "ROLE_INFO_SMS_RESELLER",
+                "consumed":true
             }
         ]
         """
@@ -350,16 +356,7 @@ Feature: Manage accounts
         When I send a POST request to "/user/register-account" with body:
         """
         {
-            "invitation": "12-34-56",
-            "username": "info_sms_reseller@gmail.com",
-            "password": "pass"
-        }
-        """
-
-        And I send a POST request to "/user/register-account" with body:
-        """
-        {
-            "invitation": "12-34-56",
+            "invitation": "12-34-57",
             "username": "info_sms_reseller@gmail.com",
             "password": "pass"
         }
@@ -374,34 +371,6 @@ Feature: Manage accounts
         }
         """
 
-        And the system should have the following credit profiles:
-        """
-        [
-            {
-                "uniqueness": "u1",
-                "balance": 0
-            },
-            {
-                "uniqueness": "@string@",
-                "balance": 0
-            }
-        ]
-        """
-
-        And the system should have the following info sms profiles:
-        """
-        [
-            {
-                "uniqueness": "u1",
-                "balance": 0
-            },
-            {
-                "uniqueness": "@string@",
-                "balance": 0
-            }
-        ]
-        """
-    @current
     Scenario: Register an user account with an empty password
         When I send a POST request to "/user/register-account" with body:
         """
