@@ -1,5 +1,5 @@
 @recharge_card
-
+@this
 Feature: Consuming card
 
     Background:
@@ -87,7 +87,7 @@ Feature: Consuming card
         ]
         """
 
-        And the system should have the following cards:
+        And the system should have the following recharge card cards:
         """
         [
             {

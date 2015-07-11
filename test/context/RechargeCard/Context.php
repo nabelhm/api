@@ -209,9 +209,9 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
     }
 
     /**
-     * @Given the system should have the following cards:
+     * @Given the system should have the following recharge card cards:
      */
-    public function theSystemShouldHaveTheFollowingCards(PyStringNode $body)
+    public function theSystemShouldHaveTheFollowingRechargeCardCards(PyStringNode $body)
     {
         /** @var CollectCardsTestWorker $collectCardsTestWorker */
         $collectCardsTestWorker = $this->kernel
