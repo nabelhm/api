@@ -1,5 +1,5 @@
 @recharge_card
-@this
+
 Feature: Consuming card
 
     Background:
