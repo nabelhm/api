@@ -40,7 +40,7 @@ class CollectCardsTestWorker
         return $this->connectToStorageInternalWorker->connect()
             ->find()
             ->fields([
-                'uniqueness' => 0 // Exclude
+                '_id' => 0 // Exclude
             ]);
     }
 }

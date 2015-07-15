@@ -19,7 +19,13 @@ Feature: Consuming card
         [
             {
                 "code": "wwww-xxxx-yyyy",
-                "category": "c1"
+                "category": "c1",
+                "consumed": false
+            },
+            {
+                "code": "wwww-xxxx-zzzz",
+                "category": "c1",
+                "consumed": true
             }
         ]
         """
@@ -58,6 +64,45 @@ Feature: Consuming card
         }
         """
 
+        And the system should have the following credit profiles:
+        """
+        [
+            {
+                "uniqueness": "u1",
+                "balance": 10
+            }
+        ]
+        """
+
+        And the system should have the following credit profile balance operations:
+        """
+        [
+            {
+                "uniqueness": "u1",
+                "amount": 10,
+                "impact": "+",
+                "description": "Recarga de saldo con tarjeta de recarga \"wwww-xxxx-yyyy\"",
+                "created": "@integer@"
+            }
+        ]
+        """
+
+        And the system should have the following recharge card cards:
+        """
+        [
+            {
+                "code": "wwww-xxxx-yyyy",
+                "category": "c1",
+                "consumed": true
+            },
+            {
+                "code": "wwww-xxxx-zzzz",
+                "category": "c1",
+                "consumed": true
+            }
+        ]
+        """
+
     Scenario: Consuming a non existent card
         When I send a POST request to "/recharge-card/me/consume-card" with body:
         """
@@ -75,26 +120,12 @@ Feature: Consuming card
         }
         """
 
-        Then the system should have the following credit profile for "u1":
-        """
-        {
-            "uniqueness": "u1",
-            "balance": 0
-        }
-        """
 
     Scenario: Consuming an already consumed card
         When I send a POST request to "/recharge-card/me/consume-card" with body:
         """
         {
-            "code": "wwww-xxxx-yyyy"
-        }
-        """
-
-        And I send a POST request to "/recharge-card/me/consume-card" with body:
-        """
-        {
-            "code": "wwww-xxxx-yyyy"
+            "code": "wwww-xxxx-zzzz"
         }
         """
 
@@ -104,13 +135,5 @@ Feature: Consuming card
         """
         {
             "code": "RECHARGE_CARD.CARD.ALREADY_CONSUMED"
-        }
-        """
-
-        And the system should have the following credit profile for "u1":
-        """
-        {
-            "uniqueness": "u1",
-            "balance": 10
         }
         """

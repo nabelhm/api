@@ -5,6 +5,7 @@ namespace Muchacuba\RechargeCard;
 use Behat\Behat\Context\Environment\InitializedContextEnvironment;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
 use Coduo\PHPMatcher\Factory\SimpleFactory;
@@ -115,7 +116,8 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
         foreach ($items as $item) {
             $createCardTestWorker->create(
                 $item['code'],
-                $item['category']
+                $item['category'],
+                $item['consumed']
             );
         }
     }
@@ -204,5 +206,25 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
         );
 
         $this->rootContext->ignoreState('Muchacuba\RechargeCard\Category');
+    }
+
+    /**
+     * @Given the system should have the following recharge card cards:
+     */
+    public function theSystemShouldHaveTheFollowingCards(PyStringNode $body)
+    {
+        /** @var CollectCardsTestWorker $collectCardsTestWorker */
+        $collectCardsTestWorker = $this->kernel
+            ->getContainer()
+            ->get('muchacuba.recharge_card.collect_cards_test_worker');
+
+        Assert::assertTrue(
+            (new SimpleFactory())->createMatcher()->match(
+                iterator_to_array($collectCardsTestWorker->collect()),
+                (array) json_decode($body->getRaw(), true)
+            )
+        );
+
+        $this->rootContext->ignoreState('Muchacuba\RechargeCard\Card');
     }
 }
