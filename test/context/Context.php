@@ -172,6 +172,7 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
 
         /** @var CollectTopicsTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.info_sms.collect_topics_test_worker');
+        $this->states['Muchacuba\Internet\Profile'] = iterator_to_array($collectWorker->collect());
         $this->states['Muchacuba\Topics\Profile'] = iterator_to_array($collectWorker->collect());
 
         /** @var CollectInternetProfilesTestWorker $collectWorker */
@@ -251,6 +252,20 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 );
             } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
                 $this->throwException($e, 'Muchacuba\Authentication\Profile');
+            }
+        }
+
+        if (isset($this->states['Cubalider\Uniqueness'])) {
+            /** @var CollectUniquenessTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('cubalider.unique.collect_uniqueness_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Cubalider\Uniqueness'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Cubalider\Uniqueness');
             }
         }
 
@@ -419,6 +434,48 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 );
             } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
                 $this->throwException($e, 'Muchacuba\InfoSms\Topic');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\Internet\Profile'])) {
+            /** @var CollectInternetProfilesTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.internet.collect_profiles_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\Internet\Profile'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\Internet\Profile');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\Mobile\Profile'])) {
+            /** @var CollectMobileProfilesTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.mobile.collect_profiles_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\Mobile\Profile'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\Mobile\Profile');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\Privilege\AssignedRoles'])) {
+            /** @var CollectAssignedRolesTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.privilege.collect_assigned_roles_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\Privilege\AssignedRoles'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\Privilege\AssignedRoles');
             }
         }
 
