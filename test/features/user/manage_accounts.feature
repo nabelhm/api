@@ -160,11 +160,13 @@ Feature: Manage accounts
         [
             {
                 "uniqueness": "u1",
-                "debt": 0
+                "debt": 0,
+                "cards": []
             },
             {
                 "uniqueness": "@string@",
-                "debt": 0
+                "debt": 0,
+                "cards": []
             }
         ]
         """
@@ -310,11 +312,13 @@ Feature: Manage accounts
         [
             {
                 "uniqueness": "u1",
-                "debt": 0
+                "debt": 0,
+                "cards": []
             },
             {
                 "uniqueness": "@string@",
-                "debt": 0
+                "debt": 0,
+                "cards": []
             }
         ]
         """
