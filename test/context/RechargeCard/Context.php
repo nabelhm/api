@@ -228,26 +228,4 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
 
         $this->rootContext->ignoreState('Muchacuba\RechargeCard\Card');
     }
-
-    /**
-     * @Given the system should have the following recharge card profiles:
-     *
-     * @param PyStringNode $body
-     */
-    public function theSystemShouldHaveTheFollowingRechargeCardProfiles(PyStringNode $body)
-    {
-        /** @var CollectProfilesTestWorker $collectCategoriesTestWorker */
-        $collectCategoriesTestWorker = $this->kernel
-            ->getContainer()
-            ->get('muchacuba.recharge_card.collect_profiles_test_worker');
-
-        Assert::assertTrue(
-            (new SimpleFactory())->createMatcher()->match(
-                iterator_to_array($collectCategoriesTestWorker->collect()),
-                (array) json_decode($body->getRaw(), true)
-            )
-        );
-
-        $this->rootContext->ignoreState('Muchacuba\RechargeCard\Profile');
-    }
 }

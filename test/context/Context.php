@@ -72,7 +72,6 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
             'Muchacuba\Privilege\AssignedRoles',
             'Muchacuba\RechargeCard\Package',
             'Muchacuba\RechargeCard\Category',
-            'Muchacuba\RechargeCard\Profile'
             'Muchacuba\RechargeCard\Card',
             'Muchacuba\RechargeCard\Profile',
         ];
