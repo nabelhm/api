@@ -1,5 +1,5 @@
 @credit
-@current
+
 Feature: Pick profile
 
     Background:

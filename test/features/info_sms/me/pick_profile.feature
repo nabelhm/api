@@ -1,5 +1,5 @@
 @info_sms
-@current
+
 Feature: Pick profile
 
     Background:
