@@ -37,13 +37,14 @@ class CreateCardTestWorker
      *
      * @param string $code
      * @param string $role
+     * @param string $consumed
      */
-    public function create($code, $role)
+    public function create($code, $role, $consumed)
     {
         $this->connectToStorageInternalWorker->connect()->insert(array(
             'code' => $code,
             'role' => $role,
-            'consumed' => false
+            'consumed' => $consumed
         ));
     }
 }

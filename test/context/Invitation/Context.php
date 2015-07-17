@@ -57,7 +57,8 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
         foreach ($items as $item) {
             $createCardTestWorker->create(
                 $item['code'],
-                $item['role']
+                $item['role'],
+                $item['consumed']
             );
         }
     }

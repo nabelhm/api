@@ -154,11 +154,12 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
             ->getContainer()
             ->get('muchacuba.recharge_card.collect_profiles_test_worker');
 
-        Assert::assertTrue(
-            (new SimpleFactory())->createMatcher()->match(
-                iterator_to_array($collectProfilesTestWorker->collect()),
-                (array) json_decode($body->getRaw(), true)
-            )
+        (new SimpleFactory())->createMatcher()->match(
+            iterator_to_array($collectProfilesTestWorker->collect()),
+            (array) json_decode($body->getRaw(), true)
+        ) ?: Assert::assertEquals(
+            iterator_to_array($collectProfilesTestWorker->collect()),
+            (array) json_decode($body->getRaw(), true)
         );
 
         $this->rootContext->ignoreState('Muchacuba\RechargeCard\Profile');
