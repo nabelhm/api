@@ -127,7 +127,7 @@ Feature: Manage subscriptions
             {
                 "message": "@string@",
                 "receiver": "+5312345678",
-                "body": "Tu telefono se ha subscrito con 10 sms gratis para recibir noticias del topico que seleccionaste."
+                "body": "Tu teléfono se ha suscrito con 10 sms gratis para recibir noticias del tópico que seleccionaste."
             }
         ]
         """
@@ -205,7 +205,7 @@ Feature: Manage subscriptions
             {
                 "message": "@string@",
                 "receiver": "+5312345678",
-                "body": "Tu telefono se ha subscrito con 100 sms para recibir noticias del topico que seleccionaste."
+                "body": "Tu teléfono se ha suscrito con 100 sms para recibir noticias del tópico que seleccionaste."
             }
         ]
         """
@@ -469,7 +469,7 @@ Feature: Manage subscriptions
             {
                 "message": "@string@",
                 "receiver": "+5312345678",
-                "body": "Tu telefono se ha subscrito con 100 sms para recibir noticias del topico que seleccionaste."
+                "body": "Tu teléfono se ha suscrito con 100 sms para recibir noticias del tópico que seleccionaste."
             }
         ]
         """
@@ -711,7 +711,7 @@ Feature: Manage subscriptions
             {
                 "message": "@string@",
                 "receiver": "+5312345678",
-                "body": "Tu telefono se ha subscrito con 100 sms para recibir noticias del topico que seleccionaste."
+                "body": "Tu teléfono se ha suscrito con 100 sms para recibir noticias del tópico que seleccionaste."
             }
         ]
         """
@@ -804,7 +804,7 @@ Feature: Manage subscriptions
             {
                 "message": "@string@",
                 "receiver": "+5312345678",
-                "body": "Tu telefono se ha recargado con 100 sms para seguir recibiendo noticias."
+                "body": "Tu teléfono se ha recargado con 100 sms para seguir recibiendo noticias."
             }
         ]
         """

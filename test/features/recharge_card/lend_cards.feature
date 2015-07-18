@@ -116,7 +116,7 @@ Feature: Lend cards
                 "uniqueness": "u1",
                 "amount": 50,
                 "impact": "+",
-                "description": "Pr\u00e9stamo de 5 tarjetas de categor\u00eda \"Category 1\"",
+                "description": "Préstamo de 5 tarjetas de categoría \"Category 1\"",
                 "created": "@integer@"
             }
         ]

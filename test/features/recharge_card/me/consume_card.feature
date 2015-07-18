@@ -120,7 +120,6 @@ Feature: Consuming card
         }
         """
 
-
     Scenario: Consuming an already consumed card
         When I send a POST request to "/recharge-card/me/consume-card" with body:
         """

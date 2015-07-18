@@ -68,7 +68,7 @@ Feature: Liquidate debt
                 "uniqueness": "u1",
                 "amount": 200,
                 "impact": "-",
-                "description": "Liquidaci\u00f3n",
+                "description": "Liquidación",
                 "created": "@integer@"
             }
         ]

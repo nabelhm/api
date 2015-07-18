@@ -65,14 +65,14 @@ Feature: Collect operations
         [
             {
                 "uniqueness": "u1",
-                "description": "Liquidaci\u00f3n",
+                "description": "Liquidación",
                 "impact": "+",
                 "amount": 100,
                 "created": "@integer@"
             },
             {
                 "uniqueness": "u1",
-                "description": "Pr\u00e9stamo de 10 tarjetas de categor\u00eda \u0022Tarjeta de 10\u0022",
+                "description": "Préstamo de 10 tarjetas de categoría \"Tarjeta de 10\"",
                 "impact": "-",
                 "amount": 100,
                 "created": "@integer@"
