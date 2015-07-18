@@ -39,7 +39,7 @@ Feature: Lend cards
         [
             {
                 "id": "u1",
-                "username": "info_sms_reseller@muchacuba.local",
+                "username": "recharge_card_reseller@muchacuba.local",
                 "password": "pass",
                 "roles": ["ROLE_RECHARGE_CARD_RESELLER"]
             },
@@ -72,44 +72,60 @@ Feature: Lend cards
         {}
         """
 
-        And I am authenticating as "info_sms_reseller@muchacuba.local" with "pass" password
-
-        And the system should have the following info sms profile for "u1":
+        And the system should have the following recharge card cards:
         """
-        {
-            "uniqueness": "u1",
-            "debt": 50,
-            "cards": [
-              {
-                  "code": "@string@",
-                  "category": "c1",
-                  "consumed": false
-              },
-              {
-                  "code": "@string@",
-                  "category": "c1",
-                  "consumed": false
-              },
-              {
-                  "code": "@string@",
-                  "category": "c1",
-                  "consumed": false
-              },
-              {
-                  "code": "@string@",
-                  "category": "c1",
-                  "consumed": false
-              },
-              {
-                  "code": "@string@",
-                  "category": "c1",
-                  "consumed": false
-              }
-          ]
-        }
+        [
+            {
+                "code": "@string@",
+                "category": "c1",
+                "consumed": false
+            },
+            {
+                "code": "@string@",
+                "category": "c1",
+                "consumed": false
+            },
+            {
+                "code": "@string@",
+                "category": "c1",
+                "consumed": false
+            },
+            {
+                "code": "@string@",
+                "category": "c1",
+                "consumed": false
+            },
+            {
+                "code": "@string@",
+                "category": "c1",
+                "consumed": false
+            }
+        ]
         """
 
-        And the system should have the following recharge card profile debt operations for "u1":
+        And the system should have the following recharge card profiles:
+        """
+        [
+            {
+                "uniqueness": "u2",
+                "debt": 0,
+                "cards": []
+            },
+            {
+                "uniqueness": "u1",
+                "debt": 50,
+                "cards": [
+                    "@string@",
+                    "@string@",
+                    "@string@",
+                    "@string@",
+                    "@string@"
+                ]
+            }
+        ]
+        """
+
+        And the system should have the following recharge card profiles debt operations
         """
         [
             {
