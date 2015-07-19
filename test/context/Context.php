@@ -208,10 +208,32 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
     }
 
     /**
-     * @AfterScenario
+     * @AfterStep
+     *
+     * @param AfterStepScope $scope
      */
-    public function theSystemShouldNotHaveAnyOtherChange()
+    public function theSystemShouldNotHaveAnyOtherChange(AfterStepScope $scope)
     {
+        $isLastStep = false;
+
+        $scenarios = $scope->getFeature()->getScenarios();
+        foreach ($scenarios as $scenario) {
+            $count = count($scenario->getSteps());
+            foreach ($scenario->getSteps() as $key => $step) {
+                if ($scope->getStep() == $step) {
+                    if ($key == $count - 1) {
+                        $isLastStep = true;
+
+                        break 2;
+                    }
+                }
+            }
+        }
+
+        if (!$isLastStep) {
+            return;
+        }
+
         if (isset($this->states['Cubalider\Sms\Message'])) {
             /** @var CollectInfosTestWorker $collectWorker */
             $collectWorker = $this->kernel->getContainer()->get('cubalider.sms.collect_messages_test_worker');
@@ -602,19 +624,21 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
     }
 
     /**
-     * @param \Exception $e
+     * @param \PHPUnit_Framework_ExpectationFailedException $e
      * @param $state
      *
      * @throws \Exception
      */
-    private function throwException(\Exception $e, $state)
+    private function throwException(\PHPUnit_Framework_ExpectationFailedException $e, $state)
     {
-        throw new \Exception(
+        throw new \PHPUnit_Framework_ExpectationFailedException(
             sprintf(
-                "Invalid state on %s:\r\n%s",
+                "Invalid state on %s:\r\n\r\n%s",
                 $state,
                 $e->getMessage()
-            )
+            ),
+            $e->getComparisonFailure(),
+            $e->getPrevious()
         );
     }
 }
