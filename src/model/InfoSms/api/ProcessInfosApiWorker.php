@@ -129,7 +129,8 @@ class ProcessInfosApiWorker
 
                 $this->createStatInternalWorker->create(
                     $info,
-                    $total
+                    $total,
+                    time()
                 );
             } catch (EmptyQueueInternalException $e) {
                 return;

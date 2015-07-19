@@ -1,17 +1,17 @@
 <?php
 
-namespace Muchacuba\InfoSms\Subscription;
+namespace Muchacuba\InfoSms\Message;
 
 use JMS\DiExtraBundle\Annotation as Di;
-use Muchacuba\InfoSms\Subscription\Operation\ConnectToStorageInternalWorker as ConnectToOperationStorageInternalWorker;
-use Muchacuba\InfoSms\Subscription\Operation\InvalidGroupApiException;
+use Muchacuba\InfoSms\Message\Stat\ConnectToStorageInternalWorker as ConnectToOperationStorageInternalWorker;
+use Muchacuba\InfoSms\Message\Stat\InvalidGroupApiException;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  *
  * @Di\Service()
  */
-class ComputeOperationsFromTopicBetweenDatesApiWorker
+class ComputeStatsFromTopicBetweenDatesApiWorker
 {
     const GROUP_BY_DAY = 1;
     const GROUP_BY_MONTH = 2;
@@ -26,7 +26,7 @@ class ComputeOperationsFromTopicBetweenDatesApiWorker
      * @param ConnectToOperationStorageInternalWorker $connectToOperationStorageInternalWorker
      *
      * @Di\InjectParams({
-     *     "connectToOperationStorageInternalWorker" = @Di\Inject("muchacuba.info_sms.subscription.operation.connect_to_storage_internal_worker")
+     *     "connectToOperationStorageInternalWorker" = @Di\Inject("muchacuba.info_sms.message.stat.connect_to_storage_internal_worker")
      * })
      */
     public function __construct(ConnectToOperationStorageInternalWorker $connectToOperationStorageInternalWorker)
@@ -84,7 +84,6 @@ class ComputeOperationsFromTopicBetweenDatesApiWorker
                     ]],
                     ['$group' => [
                         '_id' => [
-                            'type' => '$type',
                             'timestamp' => $timestamp
                         ],
                         'total' => [
@@ -101,7 +100,6 @@ class ComputeOperationsFromTopicBetweenDatesApiWorker
                 case self::GROUP_BY_DAY:
                     $stats[] = [
                         'total' => $item['total'],
-                        'type' => $item['_id']['type'],
                         'year' => $item['_id']['timestamp']['year'],
                         'month' => $item['_id']['timestamp']['month'],
                         'day' => $item['_id']['timestamp']['day']
@@ -111,7 +109,6 @@ class ComputeOperationsFromTopicBetweenDatesApiWorker
                 case self::GROUP_BY_MONTH:
                     $stats[] = [
                         'total' => $item['total'],
-                        'type' => $item['_id']['type'],
                         'year' => $item['_id']['timestamp']['year'],
                         'month' => $item['_id']['timestamp']['month']
                     ];
@@ -120,7 +117,6 @@ class ComputeOperationsFromTopicBetweenDatesApiWorker
                 case self::GROUP_BY_YEAR:
                     $stats[] = [
                         'total' => $item['total'],
-                        'type' => $item['_id']['type'],
                         'year' => $item['_id']['timestamp']['year']
                     ];
 

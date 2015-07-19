@@ -5,7 +5,7 @@ namespace Muchacuba\ModelBundle\Command;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Muchacuba\InfoSms\Subscription\Operation\ConnectToStorageInternalWorker as ConnectToSubscriptionOperationStorageInternalWorker;
+use Muchacuba\InfoSms\Message\Stat\ConnectToStorageInternalWorker as ConnectToMessageStatStorageInternalWorker;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -27,25 +27,28 @@ class FixStorageCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var ConnectToSubscriptionOperationStorageInternalWorker $connectToSubscriptionOperationStorageInternalWorker */
-        $connectToSubscriptionOperationStorageInternalWorker = $this->getContainer()->get('muchacuba.info_sms.subscription.operation.connect_to_storage_internal_worker');
+        /** @var ConnectToMessageStatStorageInternalWorker $connectToMessageStatStorageInternalWorker */
+        $connectToMessageStatStorageInternalWorker = $this->getContainer()->get('muchacuba.info_sms.message.stat.connect_to_storage_internal_worker');
 
-        $operations = $connectToSubscriptionOperationStorageInternalWorker->connect()->find();
-        foreach ($operations as $operation) {
-            $connectToSubscriptionOperationStorageInternalWorker->connect()->update(
+        $stats = $connectToMessageStatStorageInternalWorker->connect()->find();
+        foreach ($stats as $stat) {
+            $connectToMessageStatStorageInternalWorker->connect()->update(
                 [
-                    '_id' => $operation['_id']
+                    '_id' => $stat['_id']
                 ],
                 [
-                    'mobile' => $operation['mobile'],
-                    'uniqueness' => $operation['uniqueness'],
-                    'topics' => $operation['topics'],
-                    'type' => $operation['type'],
+                    'id' => $stat['id'],
+                    'body' => $stat['body'],
+                    'topics' => $stat['topics'],
+                    'total' => $stat['total'],
+                    'delivered' => $stat['delivered'],
+                    'notDelivered' => $stat['notDelivered'],
                     'timestamp' => new \MongoDate(strtotime(sprintf(
-                        "%s-%s-%s",
-                        $operation['year'],
-                        $operation['month'],
-                        $operation['day']
+                        "%s-%s-%s %s",
+                        $stat['year'],
+                        $stat['month'],
+                        $stat['day'],
+                        $stat['time']
                     )))
                 ]
             );

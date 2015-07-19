@@ -1,6 +1,6 @@
 <?php
 
-namespace Muchacuba\InfoSms\Subscription\Operation;
+namespace Muchacuba\InfoSms\Message\Stat;
 
 /**
  * @author Nabel Hernandez <nabelhm@cubalider.com>

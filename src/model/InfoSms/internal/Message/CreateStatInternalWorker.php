@@ -36,17 +36,15 @@ class CreateStatInternalWorker
      *
      * @param array  $info
      * @param string $total
+     * @param int    $timestamp
      */
-    public function create($info, $total)
+    public function create($info, $total, $timestamp)
     {
         $this->connectToStorageInternalWorker->connect()->insert([
             'id' => $info['id'],
             'body' => $info['body'],
             'topics' => $info['topics'],
-            'year' => date('Y', $info['created']),
-            'month' => date('m', $info['created']),
-            'day' => date('d', $info['created']),
-            'time' =>  date('H:i:s', $info['created']),
+            'timestamp' => new \MongoDate($timestamp),
             'total' => $total,
             'delivered' => 0,
             'notDelivered' => 0

@@ -1,5 +1,5 @@
 @info_sms
-
+@current
 Feature: Processes info sms infos
 
     Background:
@@ -156,10 +156,7 @@ Feature: Processes info sms infos
                 "id": "i3",
                 "body": "Third info",
                 "topics": ["t2"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
@@ -168,10 +165,7 @@ Feature: Processes info sms infos
                 "id": "i2",
                 "body": "Second info",
                 "topics": ["t1"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
@@ -180,10 +174,7 @@ Feature: Processes info sms infos
                 "id": "i1",
                 "body": "First info",
                 "topics": ["t1"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
@@ -212,10 +203,7 @@ Feature: Processes info sms infos
                 "id": "i1",
                 "body": "First info",
                 "topics": ["t1"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 0,
                 "delivered": 0,
                 "notDelivered": 0
@@ -296,10 +284,7 @@ Feature: Processes info sms infos
                 "id": "i1",
                 "body": "First info",
                 "topics": ["t1", "t2"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
@@ -343,10 +328,7 @@ Feature: Processes info sms infos
                 "id": "i1",
                 "body": "First info",
                 "topics": ["t1"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 0,
                 "delivered": 0,
                 "notDelivered": 0
@@ -427,10 +409,7 @@ Feature: Processes info sms infos
                 "id": "i1",
                 "body": "First info",
                 "topics": ["t1"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 1,
                 "delivered": 0,
                 "notDelivered": 0
@@ -474,10 +453,7 @@ Feature: Processes info sms infos
                 "id": "i1",
                 "body": "First info",
                 "topics": ["t1"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 0,
                 "delivered": 0,
                 "notDelivered": 0

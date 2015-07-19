@@ -57,21 +57,17 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
      */
     public function theSystemShouldHaveTheFollowingLinks(PyStringNode $body)
     {
-        $expectedLinks = (array) json_decode($body->getRaw(), true);
+        $expected = (array) json_decode($body->getRaw(), true);
 
         /** @var CollectLinksTestWorker $collectLinksTestWorker */
         $collectLinksTestWorker = $this->kernel
             ->getContainer()
             ->get('muchacuba.info_sms.message.collect_links_test_worker');
 
-        $actualLinks = iterator_to_array($collectLinksTestWorker->collect());
+        $actual = iterator_to_array($collectLinksTestWorker->collect());
 
-        Assert::assertTrue(
-            (new SimpleFactory())->createMatcher()->match(
-                $actualLinks,
-                $expectedLinks
-            )
-        );
+        (new SimpleFactory())->createMatcher()->match($actual, $expected)
+            ?: (new \PHPUnit_Framework_Constraint_IsEqual($expected))->evaluate($actual);
 
         $this->rootContext->ignoreState('Muchacuba\InfoSms\Message\Link');
     }
@@ -83,17 +79,17 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
      */
     public function theSystemShouldHaveTheFollowingStats(PyStringNode $body)
     {
-        /** @var CollectLatestStatsApiWorker $collectLatestStatsApiWorker */
-        $collectLatestStatsApiWorker = $this->kernel
-            ->getContainer()
-            ->get('muchacuba.info_sms.message.collect_latest_stats_api_worker');
+        $expected = (array) json_decode($body->getRaw(), true);
 
-        Assert::assertTrue(
-            (new SimpleFactory())->createMatcher()->match(
-                iterator_to_array($collectLatestStatsApiWorker->collect()),
-                (array) json_decode($body->getRaw(), true)
-            )
-        );
+        /** @var CollectStatsTestWorker $collectStatsTestWorker */
+        $collectStatsTestWorker = $this->kernel
+            ->getContainer()
+            ->get('muchacuba.info_sms.message.collect_stats_test_worker');
+
+        $actual = iterator_to_array($collectStatsTestWorker->collect());
+
+        (new SimpleFactory())->createMatcher()->match($actual, $expected)
+            ?: (new \PHPUnit_Framework_Constraint_IsEqual($expected))->evaluate($actual);
 
         $this->rootContext->ignoreState('Muchacuba\InfoSms\Message\Stat');
     }
