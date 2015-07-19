@@ -40,14 +40,25 @@ class CollectLatestStatsApiWorker
      */
     public function collect($amount = 10)
     {
-        return $this->connectToStorageInternalWorker->connect()
+        $cursor = $this->connectToStorageInternalWorker->connect()
             ->find()
             ->fields([
                 '_id' => 0 // Exclude
             ])
+            ->limit($amount)
             ->sort([
                 '_id' => -1
-            ])
-            ->limit($amount);
+            ]);
+
+        $stats = [];
+        foreach ($cursor as $i => $stat) {
+            /** @var \MongoDate $timestamp */
+            $timestamp = $stat['timestamp'];
+            $stat['timestamp'] = $timestamp->sec;
+
+            $stats[] = $stat;
+        }
+
+        return new \ArrayIterator($stats);
     }
 }
