@@ -1,5 +1,5 @@
 @invitation
-
+@current
 Feature: Give Cards
 
     Background:
@@ -65,6 +65,36 @@ Feature: Give Cards
         }
         """
 
+        And the system should have the following invitation cards:
+        """
+        [
+            {
+                "code": "@string@",
+                "role": "ROLE_INFO_SMS_JOURNALIST",
+                "consumed": false
+            },
+            {
+                "code": "@string@",
+                "role": "ROLE_INFO_SMS_JOURNALIST",
+                "consumed": false
+            }
+        ]
+        """
+
+        And the system should have the following invitation assigned cards:
+        """
+        [
+            {
+                "uniqueness": "u1",
+                "card": "@string@"
+            },
+            {
+                "uniqueness": "u1",
+                "card": "@string@"
+            }
+        ]
+        """
+
     Scenario: Giving invitations to a different user
         When I send a POST request to "/invitation/give-cards" with body:
         """
@@ -118,6 +148,35 @@ Feature: Give Cards
                 }
             ]
         }
+        """
+
+        And the system should have the following invitation cards:
+        """
+        [
+            {
+                "code": "@string@",
+                "role": "ROLE_INFO_SMS_JOURNALIST",
+                "consumed": false
+            },
+            {
+                "code": "@string@",
+                "role": "ROLE_INFO_SMS_JOURNALIST",
+                "consumed": false
+            }
+        ]
+        """
+        And the system should have the following invitation assigned cards:
+        """
+        [
+            {
+                "uniqueness": "u2",
+                "card": "@string@"
+            },
+            {
+                "uniqueness": "u2",
+                "card": "@string@"
+            }
+        ]
         """
 
     Scenario: Giving invitations with an invalid amount
