@@ -101,4 +101,24 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
 
         $this->rootContext->ignoreState('Muchacuba\RechargeCard\Profile\Debt\Operation');
     }
+
+    /**
+     * @Given the system should have the following recharge card profiles debt operations
+     */
+    public function theSystemShouldHaveTheFollowingDebtOperations(PyStringNode $body)
+    {
+        /** @var CollectOperationsTestWorker $collectOperationsTestWorker */
+        $collectOperationsTestWorker = $this->kernel
+            ->getContainer()
+            ->get('muchacuba.recharge_card.profile.debt.collect_operations_test_worker');
+
+        Assert::assertTrue(
+            (new SimpleFactory())->createMatcher()->match(
+                iterator_to_array($collectOperationsTestWorker->collect()),
+                (array) json_decode($body->getRaw(), true)
+            )
+        );
+
+        $this->rootContext->ignoreState('Muchacuba\RechargeCard\Profile\Debt\Operation');
+    }
 }
