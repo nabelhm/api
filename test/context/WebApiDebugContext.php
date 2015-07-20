@@ -5,7 +5,6 @@ namespace Muchacuba;
 use Behat\Behat\Context\SnippetAcceptingContext;
 use Behat\Behat\Hook\Scope\AfterStepScope;
 use Behat\Behat\Hook\Scope\BeforeScenarioScope;
-use Behat\WebApiExtension\Context\WebApiContext;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -27,7 +26,7 @@ class WebApiDebugContext implements SnippetAcceptingContext
         /** @var \Behat\Behat\Context\Environment\InitializedContextEnvironment $environment */
         $environment = $scope->getEnvironment();
 
-        $this->webApiContext = $environment->getContext('Behat\WebApiExtension\Context\WebApiContext');
+        $this->webApiContext = $environment->getContext('Muchacuba\WebApiContext');
     }
 
     /**
