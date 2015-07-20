@@ -2,11 +2,16 @@
 
 namespace Muchacuba\Invitation;
 
+use Behat\Behat\Context\Environment\InitializedContextEnvironment;
 use Behat\Behat\Context\SnippetAcceptingContext;
+use Behat\Behat\Hook\Scope\BeforeScenarioScope;
+use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Symfony2Extension\Context\KernelAwareContext;
+use Coduo\PHPMatcher\Factory\SimpleFactory;
 use Symfony\Component\HttpKernel\KernelInterface;
 use PHPUnit_Framework_Assert as Assert;
+use Muchacuba\Context as RootContext;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>
@@ -20,11 +25,29 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
     private $kernel;
 
     /**
+     * @var RootContext
+     */
+    private $rootContext;
+
+    /**
      * {@inheritdoc}
      */
     public function setKernel(KernelInterface $kernel)
     {
         $this->kernel = $kernel;
+    }
+
+    /**
+     * @BeforeScenario
+     *
+     * @param BeforeScenarioScope $scope
+     */
+    public function gatherRootContext(BeforeScenarioScope $scope)
+    {
+        /** @var InitializedContextEnvironment $environment */
+        $environment = $scope->getEnvironment();
+
+        $this->rootContext = $environment->getContext('Muchacuba\Context');
     }
 
     /**
@@ -61,5 +84,49 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 $item['consumed']
             );
         }
+    }
+
+    /**
+     * @Given the system should have the following invitation cards:
+     *
+     * @param PyStringNode $body
+     */
+    public function theSystemShouldHaveTheFollowingCards(PyStringNode $body)
+    {
+        /** @var CollectCardsTestWorker $collectCardsTestWorker */
+        $collectCardsTestWorker = $this->kernel
+            ->getContainer()
+            ->get('muchacuba.invitation.collect_cards_test_worker');
+
+        Assert::assertTrue(
+            (new SimpleFactory())->createMatcher()->match(
+                iterator_to_array($collectCardsTestWorker->collect()),
+                (array) json_decode($body->getRaw(), true)
+            )
+        );
+
+        $this->rootContext->ignoreState('Muchacuba\Invitation\Card');
+    }
+
+    /**
+     * @Given the system should have the following invitation assigned cards:
+     *
+     * @param PyStringNode $body
+     */
+    public function theSystemShouldHaveTheFollowingInvitationAssignedCards(PyStringNode $body)
+    {
+        /** @var CollectAssignedCardsTestWorker $collectCardsTestWorker */
+        $collectCardsTestWorker = $this->kernel
+            ->getContainer()
+            ->get('muchacuba.invitation.collect_assigned_cards_test_worker');
+
+        Assert::assertTrue(
+            (new SimpleFactory())->createMatcher()->match(
+                iterator_to_array($collectCardsTestWorker->collect()),
+                (array) json_decode($body->getRaw(), true)
+            )
+        );
+
+        $this->rootContext->ignoreState('Muchacuba\Invitation\AssignedCard');
     }
 }

@@ -18,6 +18,8 @@ use Muchacuba\InfoSms\CollectTopicsTestWorker;
 use Muchacuba\InfoSms\Subscription\CollectOperationsTestWorker as CollectSubscriptionOperationsTestWorker;
 use Muchacuba\InfoSms\Subscription\LowBalanceReminder\CollectLogsTestWorker as CollectSubscriptionLowBalanceReminderLogsTestWorker;
 use Muchacuba\Internet\CollectProfilesTestWorker as CollectInternetProfilesTestWorker;
+use Muchacuba\Invitation\CollectAssignedCardsTestWorker as CollectAssignedInvitationCardsTestWorker;
+use Muchacuba\Invitation\CollectCardsTestWorker as CollectInvitationCardsTestWorker;
 use Muchacuba\Mobile\CollectProfilesTestWorker as  CollectMobileProfilesTestWorker;
 use Muchacuba\Privilege\CollectAssignedRolesTestWorker;
 use Muchacuba\RechargeCard\CollectCardsTestWorker;
@@ -69,6 +71,8 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
             'Muchacuba\InfoSms\Subscription\Operation',
             'Muchacuba\InfoSms\Topic',
             'Muchacuba\Internet\Profile',
+            'Muchacuba\Invitation\Card',
+            'Muchacuba\Invitation\AssignedCard',
             'Muchacuba\Mobile\Profile',
             'Muchacuba\Privilege\AssignedRoles',
             'Muchacuba\RechargeCard\Package',
@@ -173,12 +177,19 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
 
         /** @var CollectTopicsTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.info_sms.collect_topics_test_worker');
-        $this->states['Muchacuba\Internet\Profile'] = iterator_to_array($collectWorker->collect());
         $this->states['Muchacuba\Topics\Profile'] = iterator_to_array($collectWorker->collect());
 
         /** @var CollectInternetProfilesTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.internet.collect_profiles_test_worker');
         $this->states['Muchacuba\Internet\Profile'] = iterator_to_array($collectWorker->collect());
+
+        /** @var CollectInvitationCardsTestWorker $collectWorker */
+        $collectWorker = $this->kernel->getContainer()->get('muchacuba.invitation.collect_cards_test_worker');
+        $this->states['Muchacuba\Invitation\Card'] = iterator_to_array($collectWorker->collect());
+
+        /** @var CollectAssignedInvitationCardsTestWorker $collectWorker */
+        $collectWorker = $this->kernel->getContainer()->get('muchacuba.invitation.collect_assigned_cards_test_worker');
+        $this->states['Muchacuba\Invitation\AssignedCard'] = iterator_to_array($collectWorker->collect());
 
         /** @var CollectMobileProfilesTestWorker $collectWorker */
         $collectWorker = $this->kernel->getContainer()->get('muchacuba.mobile.collect_profiles_test_worker');
@@ -471,6 +482,34 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
                 );
             } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
                 $this->throwException($e, 'Muchacuba\Internet\Profile');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\Invitation\Card'])) {
+            /** @var CollectInvitationCardsTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.invitation.collect_cards_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\Invitation\Card'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\Invitation\Card');
+            }
+        }
+
+        if (isset($this->states['Muchacuba\Invitation\AssignedCard'])) {
+            /** @var CollectInvitationCardsTestWorker $collectWorker */
+            $collectWorker = $this->kernel->getContainer()->get('muchacuba.invitation.collect_assigned_cards_test_worker');
+
+            try {
+                Assert::assertEquals(
+                    $this->states['Muchacuba\Invitation\AssignedCard'],
+                    iterator_to_array($collectWorker->collect())
+                );
+            } catch (\PHPUnit_Framework_ExpectationFailedException $e) {
+                $this->throwException($e, 'Muchacuba\Invitation\AssignedCard');
             }
         }
 
