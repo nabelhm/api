@@ -129,10 +129,7 @@ Feature: Process delivery operations
                 "id": "i2",
                 "body": "Second info",
                 "topics": ["t2"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 1,
                 "delivered": 1,
                 "notDelivered": 0
@@ -141,10 +138,7 @@ Feature: Process delivery operations
                 "id": "i1",
                 "body": "First info",
                 "topics": ["t1", "t2"],
-                "year": "@string@",
-                "month": "@string@",
-                "day": "@string@",
-                "time": "@string@",
+                "timestamp": "@integer@",
                 "total": 2,
                 "delivered": 1,
                 "notDelivered": 1
@@ -175,5 +169,3 @@ Feature: Process delivery operations
             }
         ]
         """
-
-
