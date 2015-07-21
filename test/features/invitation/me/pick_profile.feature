@@ -15,13 +15,13 @@ Feature: Pick profile
         ]
         """
 
+        And the invitation card profile "a1" has assigned 2 cards of "ROLE_INFO_SMS_JOURNALIST"
+
         And I am authenticating as "admin1@server.local" with "pass1" password
 
         And I set header "content-type" with value "application/json"
 
     Scenario: Picking the invitation card profile
-        When the invitation card profile "a1" has assigned 2 cards of "ROLE_INFO_SMS_JOURNALIST"
-
         When I send a GET request to "/invitation/me/pick-profile"
 
         Then the response code should be 200
