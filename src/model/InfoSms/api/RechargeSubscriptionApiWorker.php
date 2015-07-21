@@ -194,7 +194,7 @@ class RechargeSubscriptionApiWorker
         $this->enqueueMessageApiWorker->enqueue(
             $mobile,
             sprintf(
-                "Tu teléfono se ha recargado con %s sms para seguir recibiendo noticias.",
+                "Tu telefono se ha recargado con %s sms para seguir recibiendo noticias.",
                 $resellPackage['amount']
             )
         );

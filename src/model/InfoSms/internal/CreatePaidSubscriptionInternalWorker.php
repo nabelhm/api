@@ -132,9 +132,9 @@ class CreatePaidSubscriptionInternalWorker
             $this->enqueueMessageApiWorker->enqueue(
                 $mobile,
                 sprintf(
-                    "Tu teléfono se ha suscrito con %s sms para recibir noticias %s que seleccionaste.",
+                    "Tu telefono se ha subscrito con %s sms para recibir noticias %s que seleccionaste.",
                     $resellPackage['amount'],
-                    count($topics) == 1 ? "del tópico" : sprintf("de los %s tópicos", count($topics))
+                    count($topics) == 1 ? "del topico" : sprintf("de los %s topicos", count($topics))
                 )
             );
         }
