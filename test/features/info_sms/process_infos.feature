@@ -1,5 +1,5 @@
 @info_sms
-@current
+
 Feature: Processes info sms infos
 
     Background:

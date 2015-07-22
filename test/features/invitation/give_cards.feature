@@ -1,5 +1,5 @@
 @invitation
-@current
+
 Feature: Give Cards
 
     Background:
