@@ -79,6 +79,22 @@ Feature: Manage accounts
         ]
         """
 
+        And the system should have the following invitation cards:
+        """
+        [
+            {
+                "code": "12-34-56",
+                "role": "ROLE_INFO_SMS_RESELLER",
+                "consumed":true
+            },
+            {
+                "code": "12-34-57",
+                "role": "ROLE_INFO_SMS_RESELLER",
+                "consumed":true
+            }
+        ]
+        """
+
         And the system should have the following uniquenesses:
         """
         [
@@ -227,6 +243,22 @@ Feature: Manage accounts
                 "roles": [
                     "ROLE_INFO_SMS_RESELLER"
                 ]
+            }
+        ]
+        """
+
+        And the system should have the following invitation cards:
+        """
+        [
+            {
+                "code": "12-34-56",
+                "role": "ROLE_INFO_SMS_RESELLER",
+                "consumed":true
+            },
+            {
+                "code": "12-34-57",
+                "role": "ROLE_INFO_SMS_RESELLER",
+                "consumed":true
             }
         ]
         """
