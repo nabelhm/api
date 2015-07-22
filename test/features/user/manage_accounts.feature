@@ -1,5 +1,5 @@
 @user
-@this
+
 Feature: Manage accounts
 
     Background:
