@@ -64,7 +64,11 @@ class IncreaseBalanceDeliveryOperationListener implements EventSubscriberInterfa
         try {
             $link = $this->pickLinkInternalWorker->pick($event->getMessage());
 
-            $this->increaseSubscriptionBalanceWorker->increase($link['subscription']);
+            try {
+                $this->increaseSubscriptionBalanceWorker->increase($link['subscription']);
+            } catch (NonExistentMobileInternalException $e) {
+                // Maybe subscription was deleted, then ignore it
+            }
 
             // TODO: Delete link in a post event
             $this->deleteLinkInternalWorker->delete($event->getMessage());
