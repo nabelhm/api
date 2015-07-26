@@ -569,6 +569,26 @@ Feature: Manage subscriptions
         }
         """
 
+    Scenario: Creating a subscription with non existent topic
+        When I send a POST request to "/info-sms/me/create-subscription" with body:
+        """
+        {
+            "mobile": "+5312345678",
+            "alias": "nabel",
+            "topics": ["t10"],
+            "resellPackage": "rp1"
+        }
+        """
+
+        Then the response code should be 400
+
+        And the response should contain json:
+        """
+        {
+           "code": "INFO_SMS.SUBSCRIPTION.NON_EXISTENT_TOPICS"
+        }
+        """
+
     Scenario: Creating a subscription with no resell package
         When I send a POST request to "/info-sms/me/create-subscription" with body:
         """
@@ -807,6 +827,72 @@ Feature: Manage subscriptions
                 "body": "Tu telefono se ha recargado con 100 sms para seguir recibiendo noticias."
             }
         ]
+        """
+
+    Scenario: Recharging a subscription with no topics
+        Given the system has the following info sms subscriptions:
+        """
+        [
+            {
+                "mobile": "+5312345678",
+                "uniqueness": "u1",
+                "alias": "nabel",
+                "topics": ["t1"],
+                "trial": 0,
+                "balance": 100,
+                "active": true
+            }
+        ]
+        """
+
+        And I send a POST request to "/info-sms/me/recharge-subscription/+5312345678" with body:
+        """
+        {
+            "topics": [],
+            "resellPackage": "rp1"
+        }
+        """
+
+        Then the response code should be 400
+
+        And the response should contain json:
+        """
+        {
+           "code": "INFO_SMS.SUBSCRIPTION.NO_TOPICS"
+        }
+        """
+
+    Scenario: Recharging a subscription with non existent topic
+        Given the system has the following info sms subscriptions:
+        """
+        [
+            {
+                "mobile": "+5312345678",
+                "uniqueness": "u1",
+                "alias": "nabel",
+                "topics": ["t1"],
+                "trial": 0,
+                "balance": 100,
+                "active": true
+            }
+        ]
+        """
+
+        And I send a POST request to "/info-sms/me/recharge-subscription/+5312345678" with body:
+        """
+        {
+            "topics": ["t1", "t10"],
+            "resellPackage": "rp2"
+        }
+        """
+
+        Then the response code should be 400
+
+        And the response should contain json:
+        """
+        {
+           "code": "INFO_SMS.SUBSCRIPTION.NON_EXISTENT_TOPIC"
+        }
         """
 
     Scenario: Recharging a subscription with no resell package
@@ -1149,6 +1235,40 @@ Feature: Manage subscriptions
         """
         {
            "code": "INFO_SMS.SUBSCRIPTION.NO_TOPICS"
+        }
+        """
+
+    Scenario: Updating a subscription with non existent topic
+        Given the system has the following info sms subscriptions:
+        """
+        [
+            {
+                "mobile": "+5312345678",
+                "uniqueness": "u1",
+                "alias": "nabel",
+                "topics": ["t1"],
+                "trial": 0,
+                "balance": 100,
+                "active": true
+            }
+        ]
+        """
+
+        And I send a POST request to "/info-sms/me/update-subscription/+5312345678" with body:
+        """
+        {
+            "alias": "nabel",
+            "topics": ["t10"],
+            "active": false
+        }
+        """
+
+        Then the response code should be 400
+
+        And the response should contain json:
+        """
+        {
+           "code": "INFO_SMS.SUBSCRIPTION.NON_EXISTENT_TOPIC"
         }
         """
 

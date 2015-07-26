@@ -1,6 +1,6 @@
 <?php
 
-namespace Muchacuba\InfoSms\Subscription;
+namespace Muchacuba\InfoSms;
 
 /**
  * @author Yosmany Garcia <yosmanyga@gmail.com>

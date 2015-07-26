@@ -103,6 +103,24 @@ Feature: Manage infos
         }
         """
 
+    Scenario: Creating an info with non existent info sms topics
+        When I send a POST request to "/info-sms/create-info" with body:
+        """
+        {
+            "body": "First Info",
+            "topics": ["t10"]
+        }
+        """
+
+        Then the response code should be 400
+
+        And the response should contain json:
+        """
+        {
+            "code": "INFO_SMS.INFO.NON_EXISTENT_TOPIC"
+        }
+        """
+
     Scenario: Collecting infos
         Given the system has the following info sms infos:
         """
@@ -273,6 +291,47 @@ Feature: Manage infos
         """
         {
             "code": "INFO_SMS.INFO.NO_TOPICS"
+        }
+        """
+
+        And the system should have the following info sms infos:
+        """
+        [
+            {
+                "id": "i1",
+                "body": "First info",
+                "topics": ["t1"],
+                "created": "@integer@"
+            }
+        ]
+        """
+
+    Scenario: Updating an info with non existent info sms topics
+        Given the system has the following info sms infos:
+        """
+        [
+            {
+                "id": "i1",
+                "body": "First info",
+                "topics": ["t1"]
+            }
+        ]
+        """
+
+        When I send a POST request to "/info-sms/update-info/i1" with body:
+        """
+        {
+            "body": "First info",
+            "topics": ["t10"]
+        }
+        """
+
+        Then the response code should be 400
+
+        And the response should contain json:
+        """
+        {
+            "code": "INFO_SMS.INFO.NON_EXISTENT_TOPIC"
         }
         """
 

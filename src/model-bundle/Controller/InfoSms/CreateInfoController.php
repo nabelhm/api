@@ -7,7 +7,8 @@ use JMS\DiExtraBundle\Annotation as DI;
 use Muchacuba\InfoSms\CollectInfosApiWorker;
 use Muchacuba\InfoSms\CreateInfoApiWorker;
 use Muchacuba\InfoSms\Info\BlankBodyApiException;
-use Muchacuba\InfoSms\Info\NoTopicsApiException;
+use Muchacuba\InfoSms\NonExistentTopicApiException;
+use Muchacuba\InfoSms\NoTopicsApiException;
 use Muchacuba\ModelBundle\Util\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration as Req;
@@ -78,6 +79,13 @@ class CreateInfoController
             return new JsonResponse(
                 array(
                     'code' => 'INFO_SMS.INFO.NO_TOPICS'
+                ),
+                400
+            );
+        } catch (NonExistentTopicApiException $e) {
+            return new JsonResponse(
+                array(
+                    'code' => 'INFO_SMS.INFO.NON_EXISTENT_TOPIC'
                 ),
                 400
             );

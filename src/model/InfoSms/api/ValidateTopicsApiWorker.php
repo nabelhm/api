@@ -1,8 +1,10 @@
 <?php
 
-namespace Muchacuba\InfoSms\Subscription;
+namespace Muchacuba\InfoSms;
 
 use JMS\DiExtraBundle\Annotation as Di;
+use Muchacuba\InfoSms\NonExistentTopicApiException;
+use Muchacuba\InfoSms\NoTopicsApiException;
 
 /**
  * @author Nabel Hernandez <nabelhm@cubalider.com>
@@ -21,7 +23,7 @@ class ValidateTopicsApiWorker
      * @param ValidateTopicsInternalWorker $validateTopicsInternalWorker
      *
      * @Di\InjectParams({
-     *     "validateTopicsInternalWorker" = @Di\Inject("muchacuba.info_sms.subscription.validate_topics_internal_worker")
+     *     "validateTopicsInternalWorker" = @Di\Inject("muchacuba.info_sms.validate_topics_internal_worker")
      * })
      */
     function __construct(

@@ -1,11 +1,11 @@
 <?php
 
-namespace Muchacuba\InfoSms\Subscription;
+namespace Muchacuba\InfoSms;
 
 /**
  * @author Nabel Hernandez <nabelhm@cubalider.com>
  * @author Yosmany Garcia <yosmanyga@gmail.com>
  */
-class NonExistentTopicApiException extends \Exception
+class NonExistentTopicInternalException extends \Exception
 {
 }

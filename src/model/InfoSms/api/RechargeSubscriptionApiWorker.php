@@ -10,10 +10,10 @@ use Muchacuba\InfoSms\Subscription\ConnectToStorageInternalWorker;
 use Muchacuba\InfoSms\Profile\InsufficientBalanceApiException;
 use Muchacuba\InfoSms\Subscription\LogOperationInternalWorker;
 use Muchacuba\InfoSms\Subscription\NonExistentMobileAndUniquenessApiException;
-use Muchacuba\InfoSms\Subscription\NonExistentTopicApiException;
+use Muchacuba\InfoSms\NonExistentTopicApiException;
 use Muchacuba\InfoSms\Subscription\NoResellPackageApiException;
 use JMS\DiExtraBundle\Annotation as Di;
-use Muchacuba\InfoSms\Subscription\NoTopicsApiException;
+use Muchacuba\InfoSms\NoTopicsApiException;
 use Muchacuba\InfoSms\Subscription\TrialNotAcceptedApiException;
 use Muchacuba\InfoSms\Topic\NonExistentIdApiException;
 use Muchacuba\InfoSms\Subscription\LowBalanceReminder\DeleteLogInternalWorker as DeleteLowBalanceReminderLogInternalWorker;
@@ -33,9 +33,9 @@ class RechargeSubscriptionApiWorker
     private $connectToStorageInternalWorker;
 
     /**
-     * @var PickTopicApiWorker
+     * @var ValidateTopicsInternalWorker
      */
-    private $pickTopicApiWorker;
+    private $validateTopicsInternalWorker;
 
     /**
      * @var PickResellPackageInternalWorker
@@ -69,7 +69,7 @@ class RechargeSubscriptionApiWorker
 
     /**
      * @param ConnectToStorageInternalWorker            $connectToStorageInternalWorker
-     * @param PickTopicApiWorker                        $pickTopicApiWorker
+     * @param ValidateTopicsInternalWorker              $validateTopicsInternalWorker
      * @param PickResellPackageInternalWorker           $pickResellPackageInternalWorker
      * @param CheckBalanceInternalWorker                $checkBalanceInternalWorker
      * @param DecreaseBalanceInternalWorker             $decreaseBalanceInternalWorker
@@ -79,7 +79,7 @@ class RechargeSubscriptionApiWorker
      *
      * @Di\InjectParams({
      *     "connectToStorageInternalWorker"            = @Di\Inject("muchacuba.info_sms.subscription.connect_to_storage_internal_worker"),
-     *     "pickTopicApiWorker"                        = @Di\Inject("muchacuba.info_sms.pick_topic_api_worker"),
+     *     "validateTopicsInternalWorker"              = @Di\Inject("muchacuba.info_sms.validate_topics_internal_worker"),
      *     "pickResellPackageInternalWorker"           = @Di\Inject("muchacuba.info_sms.pick_resell_package_internal_worker"),
      *     "checkBalanceInternalWorker"                = @Di\Inject("muchacuba.info_sms.profile.check_balance_internal_worker"),
      *     "decreaseBalanceInternalWorker"             = @Di\Inject("muchacuba.info_sms.profile.decrease_balance_internal_worker"),
@@ -90,7 +90,7 @@ class RechargeSubscriptionApiWorker
      */
     public function __construct(
         ConnectToStorageInternalWorker $connectToStorageInternalWorker,
-        PickTopicApiWorker $pickTopicApiWorker,
+        ValidateTopicsInternalWorker $validateTopicsInternalWorker,
         PickResellPackageInternalWorker $pickResellPackageInternalWorker,
         CheckBalanceInternalWorker $checkBalanceInternalWorker,
         DecreaseBalanceInternalWorker $decreaseBalanceInternalWorker,
@@ -99,7 +99,7 @@ class RechargeSubscriptionApiWorker
         DeleteLowBalanceReminderLogInternalWorker $deleteLowBalanceReminderLogInternalWorker
     ) {
         $this->connectToStorageInternalWorker = $connectToStorageInternalWorker;
-        $this->pickTopicApiWorker = $pickTopicApiWorker;
+        $this->validateTopicsInternalWorker = $validateTopicsInternalWorker;
         $this->pickResellPackageInternalWorker = $pickResellPackageInternalWorker;
         $this->checkBalanceInternalWorker = $checkBalanceInternalWorker;
         $this->decreaseBalanceInternalWorker = $decreaseBalanceInternalWorker;
@@ -134,16 +134,12 @@ class RechargeSubscriptionApiWorker
             throw new NonExistentMobileAndUniquenessApiException();
         }
 
-        if (count($topics) == 0) {
+        try {
+            $this->validateTopicsInternalWorker->validate($topics);
+        } catch (NoTopicsInternalException $e) {
             throw new NoTopicsApiException();
-        }
-
-        foreach ($topics as $topic) {
-            try {
-                $this->pickTopicApiWorker->pick($topic);
-            } catch (NonExistentIdApiException $e) {
-                throw new NonExistentTopicApiException();
-            }
+        } catch (NonExistentTopicInternalException $e) {
+            throw new NonExistentTopicApiException();
         }
 
         if (!$resellPackage) {

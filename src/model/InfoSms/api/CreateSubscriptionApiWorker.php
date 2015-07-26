@@ -14,15 +14,15 @@ use Muchacuba\InfoSms\Subscription\InvalidMobileApiException;
 use Muchacuba\InfoSms\Subscription\InvalidMobileInternalException;
 use Muchacuba\InfoSms\Subscription\NonExistentResellPackageApiException;
 use Muchacuba\InfoSms\Subscription\NonExistentResellPackageInternalException;
-use Muchacuba\InfoSms\Subscription\NonExistentTopicApiException;
-use Muchacuba\InfoSms\Subscription\NonExistentTopicInternalException;
+use Muchacuba\InfoSms\NonExistentTopicApiException;
+use Muchacuba\InfoSms\NonExistentTopicInternalException;
 use Muchacuba\InfoSms\Subscription\NoResellPackageApiException;
-use Muchacuba\InfoSms\Subscription\NoTopicsApiException;
-use Muchacuba\InfoSms\Subscription\NoTopicsInternalException;
+use Muchacuba\InfoSms\NoTopicsApiException;
+use Muchacuba\InfoSms\NoTopicsInternalException;
 use Muchacuba\InfoSms\Subscription\TrialNotAcceptedApiException;
 use Muchacuba\InfoSms\Subscription\TrialNotAcceptedInternalException;
 use Muchacuba\InfoSms\Subscription\ValidateMobileAndAliasInternalWorker;
-use Muchacuba\InfoSms\Subscription\ValidateTopicsInternalWorker;
+use Muchacuba\InfoSms\ValidateTopicsInternalWorker;
 use Cubalider\Phone\NumberFixer as PhoneNumberFixer;
 
 /**
@@ -74,7 +74,7 @@ class CreateSubscriptionApiWorker
      * @Di\InjectParams({
      *     "pickProfileApiWorker"                  = @Di\Inject("muchacuba.info_sms.pick_profile_api_worker"),
      *     "validateMobileAndAliasInternalWorker"  = @Di\Inject("muchacuba.info_sms.subscription.validate_mobile_and_alias_internal_worker"),
-     *     "validateTopicsInternalWorker"          = @Di\Inject("muchacuba.info_sms.subscription.validate_topics_internal_worker"),
+     *     "validateTopicsInternalWorker"          = @Di\Inject("muchacuba.info_sms.validate_topics_internal_worker"),
      *     "pickResellPackageInternalWorker"       = @Di\Inject("muchacuba.info_sms.pick_resell_package_internal_worker"),
      *     "createTrialSubscriptionInternalWorker" = @Di\Inject("muchacuba.info_sms.create_trial_subscription_internal_worker"),
      *     "createPaidSubscriptionInternalWorker"  = @Di\Inject("muchacuba.info_sms.create_paid_subscription_internal_worker"),

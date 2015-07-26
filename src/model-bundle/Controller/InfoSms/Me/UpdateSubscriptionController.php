@@ -6,7 +6,8 @@ use Assert\Assertion;
 use JMS\DiExtraBundle\Annotation as DI;
 use Muchacuba\InfoSms\CollectSubscriptionsApiWorker;
 use Muchacuba\InfoSms\Subscription\BlankAliasApiException;
-use Muchacuba\InfoSms\Subscription\NoTopicsApiException;
+use Muchacuba\InfoSms\NonExistentTopicApiException;
+use Muchacuba\InfoSms\NoTopicsApiException;
 use Muchacuba\InfoSms\UpdateSubscriptionApiWorker;
 use Muchacuba\ModelBundle\Util\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,6 +98,13 @@ class UpdateSubscriptionController
             return new JsonResponse(
                 array(
                     'code' => 'INFO_SMS.SUBSCRIPTION.NO_TOPICS'
+                ),
+                400
+            );
+        } catch (NonExistentTopicApiException $e) {
+            return new JsonResponse(
+                array(
+                    'code' => 'INFO_SMS.SUBSCRIPTION.NON_EXISTENT_TOPIC'
                 ),
                 400
             );

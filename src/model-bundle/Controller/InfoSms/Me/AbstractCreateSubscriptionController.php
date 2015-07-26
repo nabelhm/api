@@ -4,12 +4,13 @@ namespace Muchacuba\ModelBundle\Controller\InfoSms\Me;
 
 use Assert\Assertion;
 use Muchacuba\InfoSms\CreateSubscriptionApiWorker;
+use Muchacuba\InfoSms\NonExistentTopicApiException;
 use Muchacuba\InfoSms\Subscription\BlankAliasApiException;
 use Muchacuba\InfoSms\Subscription\ExistentMobileApiException;
 use Muchacuba\InfoSms\Subscription\InsufficientBalanceApiException;
 use Muchacuba\InfoSms\Subscription\InvalidMobileApiException;
 use Muchacuba\InfoSms\Subscription\NoResellPackageApiException;
-use Muchacuba\InfoSms\Subscription\NoTopicsApiException;
+use Muchacuba\InfoSms\NoTopicsApiException;
 use Muchacuba\InfoSms\Subscription\TrialNotAcceptedApiException;
 use Muchacuba\ModelBundle\Util\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -103,6 +104,13 @@ abstract class AbstractCreateSubscriptionController
             return new JsonResponse(
                 array(
                     'code' => 'INFO_SMS.SUBSCRIPTION.NO_TOPICS'
+                ),
+                400
+            );
+        } catch (NonExistentTopicApiException $e) {
+            return new JsonResponse(
+                array(
+                    'code' => 'INFO_SMS.SUBSCRIPTION.NON_EXISTENT_TOPICS'
                 ),
                 400
             );

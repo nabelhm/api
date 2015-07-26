@@ -6,7 +6,8 @@ use Assert\Assertion;
 use JMS\DiExtraBundle\Annotation as DI;
 use Muchacuba\InfoSms\CollectInfosApiWorker;
 use Muchacuba\InfoSms\Info\BlankBodyApiException;
-use Muchacuba\InfoSms\Info\NoTopicsApiException;
+use Muchacuba\InfoSms\NonExistentTopicApiException;
+use Muchacuba\InfoSms\NoTopicsApiException;
 use Muchacuba\InfoSms\UpdateInfoApiWorker;
 use Muchacuba\ModelBundle\Util\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -80,6 +81,13 @@ class UpdateInfoController
             return new JsonResponse(
                 array(
                     'code' => 'INFO_SMS.INFO.NO_TOPICS'
+                ),
+                400
+            );
+        } catch (NonExistentTopicApiException $e) {
+            return new JsonResponse(
+                array(
+                    'code' => 'INFO_SMS.INFO.NON_EXISTENT_TOPIC'
                 ),
                 400
             );

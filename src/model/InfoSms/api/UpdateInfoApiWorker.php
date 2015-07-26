@@ -5,8 +5,8 @@ namespace Muchacuba\InfoSms;
 use Muchacuba\InfoSms\Info\BlankBodyApiException;
 use Muchacuba\InfoSms\Info\ConnectToStorageInternalWorker;
 use Muchacuba\InfoSms\Info\NonExistentIdApiException;
-use Muchacuba\InfoSms\Info\NonExistentTopicApiException;
-use Muchacuba\InfoSms\Info\NoTopicsApiException;
+use Muchacuba\InfoSms\NonExistentTopicApiException;
+use Muchacuba\InfoSms\NoTopicsApiException;
 use JMS\DiExtraBundle\Annotation as Di;
 
 /**
@@ -23,25 +23,25 @@ class UpdateInfoApiWorker
     private $connectToStorageInternalWorker;
 
     /**
-     * @var PickTopicApiWorker
+     * @var ValidateTopicsInternalWorker
      */
-    private $pickTopicApiWorker;
+    private $validateTopicsInternalWorker;
 
     /**
      * @param ConnectToStorageInternalWorker $connectToStorageInternalWorker
-     * @param PickTopicApiWorker             $pickTopicApiWorker
+     * @param ValidateTopicsInternalWorker   $validateTopicsInternalWorker
      *
      * @Di\InjectParams({
      *     "connectToStorageInternalWorker" = @Di\Inject("muchacuba.info_sms.info.connect_to_storage_internal_worker"),
-     *     "pickTopicApiWorker"             = @Di\Inject("muchacuba.info_sms.pick_topic_api_worker"),
+     *     "validateTopicsInternalWorker"   = @Di\Inject("muchacuba.info_sms.validate_topics_internal_worker")
      * })
      */
     public function __construct(
         ConnectToStorageInternalWorker $connectToStorageInternalWorker,
-        PickTopicApiWorker $pickTopicApiWorker
+        ValidateTopicsInternalWorker $validateTopicsInternalWorker
     ) {
         $this->connectToStorageInternalWorker = $connectToStorageInternalWorker;
-        $this->pickTopicApiWorker = $pickTopicApiWorker;
+        $this->validateTopicsInternalWorker =$validateTopicsInternalWorker;
     }
 
     /**
@@ -62,16 +62,12 @@ class UpdateInfoApiWorker
             throw new BlankBodyApiException();
         }
 
-        if (count($topics) == 0) {
+        try {
+            $this->validateTopicsInternalWorker->validate($topics);
+        } catch (NoTopicsInternalException $e) {
             throw new NoTopicsApiException();
-        }
-
-        foreach ($topics as $topic) {
-            try {
-                $this->pickTopicApiWorker->pick($topic);
-            } catch (NonExistentIdApiException $e) {
-                throw new NonExistentTopicApiException();
-            }
+        } catch (NonExistentTopicInternalException $e) {
+            throw new NonExistentTopicApiException();
         }
 
         $result = $this->connectToStorageInternalWorker->connect()->update(
