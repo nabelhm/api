@@ -92,7 +92,7 @@ Feature: Processes info sms infos
         ]
         """
 
-        Then the system should have the following info sms subscriptions for "u1":
+        Then the system should have the following info sms subscriptions:
         """
         [
             {
@@ -240,7 +240,7 @@ Feature: Processes info sms infos
 
         When the system processes info sms infos
 
-        Then the system should have the following info sms subscriptions for "u1":
+        Then the system should have the following info sms subscriptions:
         """
         [
             {
@@ -365,7 +365,7 @@ Feature: Processes info sms infos
 
         When the system processes info sms infos
 
-        Then the system should have the following info sms subscriptions for "u1":
+        Then the system should have the following info sms subscriptions:
         """
         [
             {

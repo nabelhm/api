@@ -292,21 +292,20 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
     }
 
     /**
-     * @Then the system should have the following info sms subscriptions for :uniqueness:
+     * @Then the system should have the following info sms subscriptions:
      *
-     * @param string $uniqueness
      * @param PyStringNode $body
      */
-    public function theSystemShouldHaveTheFollowingSubscriptionsFor($uniqueness, PyStringNode $body)
+    public function theSystemShouldHaveTheFollowingSubscriptionsFor(PyStringNode $body)
     {
-        /** @var CollectSubscriptionsApiWorker $collectSubscriptionsApiWorker */
-        $collectSubscriptionsApiWorker = $this->kernel
+        /** @var CollectSubscriptionsTestWorker $collectSubscriptionsWorker */
+        $collectSubscriptionsWorker = $this->kernel
             ->getContainer()
-            ->get('muchacuba.info_sms.collect_subscriptions_api_worker');
+            ->get('muchacuba.info_sms.collect_subscriptions_test_worker');
 
         Assert::assertTrue(
             (new SimpleFactory())->createMatcher()->match(
-                iterator_to_array($collectSubscriptionsApiWorker->collect($uniqueness)),
+                iterator_to_array($collectSubscriptionsWorker->collect()),
                 (array) json_decode($body->getRaw(), true)
             )
         );
