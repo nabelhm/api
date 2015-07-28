@@ -146,7 +146,7 @@ Feature: Process delivery operations
         ]
         """
 
-        And the system should have the following info sms subscriptions for "u1":
+        And the system should have the following info sms subscriptions:
         """
         [
             {
