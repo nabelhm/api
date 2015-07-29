@@ -585,7 +585,7 @@ Feature: Manage subscriptions
         And the response should contain json:
         """
         {
-           "code": "INFO_SMS.SUBSCRIPTION.NON_EXISTENT_TOPICS"
+           "code": "INFO_SMS.SUBSCRIPTION.NON_EXISTENT_TOPIC"
         }
         """
 

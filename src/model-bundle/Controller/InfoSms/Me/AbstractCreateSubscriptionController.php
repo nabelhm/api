@@ -110,7 +110,7 @@ abstract class AbstractCreateSubscriptionController
         } catch (NonExistentTopicApiException $e) {
             return new JsonResponse(
                 array(
-                    'code' => 'INFO_SMS.SUBSCRIPTION.NON_EXISTENT_TOPICS'
+                    'code' => 'INFO_SMS.SUBSCRIPTION.NON_EXISTENT_TOPIC'
                 ),
                 400
             );
