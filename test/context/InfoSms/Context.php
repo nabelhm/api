@@ -377,4 +377,17 @@ class Context implements SnippetAcceptingContext, KernelAwareContext
 
         $processDeliveryOperationsApiWorker->process();
     }
+
+    /**
+     * @Given the topic :topic is disabled
+     */
+    public function theTopicIsDisabled($topic)
+    {
+        /** @var DisableTopicTestWorker $disableSubscriptionTestWorker */
+        $disableSubscriptionTestWorker = $this->kernel
+            ->getContainer()
+            ->get('muchacuba.info_sms.disable_topic_test_worker');
+
+        $disableSubscriptionTestWorker->disable($topic);
+    }
 }
