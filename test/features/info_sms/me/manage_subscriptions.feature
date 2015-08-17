@@ -1084,6 +1084,50 @@ Feature: Manage subscriptions
         ]
         """
 
+    Scenario: Updating a subscription with a disabled topic
+        Given the system has the following info sms subscriptions:
+        """
+        [
+            {
+                "mobile": "+5312345678",
+                "uniqueness": "u1",
+                "alias": "nabl",
+                "topics": ["t1"],
+                "trial": 0,
+                "balance": 100,
+                "active": true
+            }
+        ]
+        """
+
+        And the topic "t1" is disabled
+
+        And I send a POST request to "/info-sms/me/update-subscription/+5312345678" with body:
+        """
+        {
+            "alias": "nabel",
+            "topics": ["t2"],
+            "active": false
+        }
+        """
+
+        Then the response code should be 200
+
+        And the response should contain json:
+        """
+        [
+            {
+                "mobile": "+5312345678",
+                "uniqueness": "u1",
+                "alias": "nabel",
+                "topics": ["t2"],
+                "trial": 0,
+                "balance": 100,
+                "active": false
+            }
+        ]
+        """
+
     Scenario: Updating a subscription with a blank alias
         Given the system has the following info sms subscriptions:
         """
